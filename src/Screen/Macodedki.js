@@ -13,18 +13,22 @@ export default class MacodeDki extends Component{
       sodt: '',
       matkhau:'',
       smscode: '',
-    }
+    }   
   }
   async macode(){
     // console.log('aa')
     const xacthuc='http://192.168.1.12:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.pass;
  console.log(xacthuc)
+
+
+
+ 
  const {sodt,matkhau,smscode}=this.state;
     //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
     
       if(sodt!=''  &&matkhau!='' &&smscode!='') {
         if(smscode==smscode){
-     fetch(macodedki, {
+     fetch(xacthuc, {
             method:'GET',
             headers:{
                 'Content-Type': 'application/json; charset=UTF-8',
