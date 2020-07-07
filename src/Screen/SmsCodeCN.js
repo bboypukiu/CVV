@@ -9,65 +9,88 @@ import {
   AsyncStorage,
   Button
 } from 'react-native';
-import CardView from 'react-native-cardview'
+import CardView from 'react-native-cardview';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-ionicons'
-import {datlaimatkhau} from '../../API/API.js';
-let x1=Dimensions.get('window').width;
- export default class ForgotPassword extends Component{
+
+ export default class SMSCODE extends Component{
+
+
     constructor(props){
         super(props);
         this.state = { 
           x:null ,
-          isloading: false,
-      sodt:'',   
+          loading: true,
+          address: ''
+        
+     
       }}
+
+      getCoordinates(query) {
+        console.log('start loading animation');
+      }
+
+      componentDidMount(){
+        let x1=Dimensions.get('window').width;
+        this.setState({
+          x:x1,
+        })
+       
+      }
+
+
+
+    forgotpassword(){
       
-    guitinnhan()
-    {
+    }
+
+    async ghifile()
+      {
+        const taikhoan={
+          sodt:this.state.sodt,
+         
+        }
+        try {
+            await AsyncStorage.setItem('statelogin3',this.state.sodt );
+          } catch (error) {
+              console.log('sai');
+              
+            // Error saving data
+          }
+      }
+
+      
+
+    guitinnhan(){
         console.log('aa');
         
-       // this.setState{{loadingVisible: true}
-       //if(this.state.sodt) alert('Vui lòng nhập đúng sdt');
+       // this.setState{{loadingVisible: true}}
+        if(this.state.sodt=='') alert('Vui lòng nhập đúng số điện thoại');
         if(this.state.sodt!=''){
-            this.setState({
-              isloading:true,
-            })
-         fetch(datlaimatkhau,
-        {
-        method:'GET',
-          body:JSON.stringify({
-           phone: this.state.sodt,
-}),
-      headers:{
-         Accept: 'application/json',
-    'Content-Type': 'application/json'
-},
-         });
-          //this.props.natigation.navigate('login');
+          if(this.state.sodt){
+            this.ghifile();
+        
+            this.setState({ spinner: false });
  
           }
           else{
-            alert('Vui lòng nhap dung so dien thoai')
+            alert('Nhập sai số điện thoại vui lòng nhập lại')
           }
-
-
-
         }
-    
+    }
 
 render(){
     return(
-<CardView borderWidth={2.5} marginLeft={25} flex={4/10} width={x1/1.1} marginTop ={180}>
+<CardView  height={100} flex={9/10} width={this.state.x} marginTop ={90}>
     <KeyboardAvoidingView
              style = {styles.wrapper}
                           behavior = "padding">
         <View style = {styles.form}>
-            <Text style ={styles.forgotpasswordHeading} >Quên mật khẩu</Text>
-       <Text style={styles.forgotpasswordSubheading} > Nhập số điện thoại</Text>
+            <Text style ={styles.forgotpasswordHeading} > Forgot your Password</Text>
+       <Text style={styles.forgotpasswordSubheading} > Enter your telephone to find</Text>
 
                     
-       <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:300,height:40,borderWidth:0.5,borderRadius:5,padding:10,marginTop:-35, color:'#FFFFFF'}}>
+       <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:300,height:40,borderWidth:0.5,borderRadius:5,padding:10,marginTop:-10, color:'#FFFFFF'}}>
        <Icon name='person-outline' size={20} />  
                 <TextInput
                style={{width:250,height:35,color:'#000000'}}
@@ -78,12 +101,10 @@ render(){
 
        <View style={{flex:3,justifyContent:'flex-start',alignItems:'center',marginTop:8,marginRight: 5}}>
               <TouchableHighlight 
-               onPress={()=>{this.guitinnhan()}}
-              style={{width:200,borderRadius:20,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
+               onPress={()=>{this.guitinnhan('Vui lòng chờ trong giây lát')}}
+              style={{width:200,borderRadius:10,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
                 <Text style={{color:'white'}}>Gửi Tin Nhắn</Text>
               </TouchableHighlight>
-
-
 </View>
 </View>
            
@@ -121,8 +142,4 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 60,
     },
- 
-  });
-
-
-  // chị ơi sáng nay ở trường có thông báo muộn vs sv đồ án, em vs nguyên phải lên trường, chị cho bọn e nghỉ vs c nhé
+   });

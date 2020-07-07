@@ -1,9 +1,9 @@
-import React, { Component, useEffect, useState   } from 'react';
-import { View,Text,Image ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking,ActivityIndicator} from 'react-native';
+import React, { Component    } from 'react';
+import { View,Text,Image ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking} from 'react-native';
 import Icon from 'react-native-ionicons';
 import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
 
-
+import MenuListApi from '../../API/MenuListApi';
 import {Picker} from '@react-native-community/picker';
 
 let x1=Dimensions.get('window').width;// lay ra chieu rong cua man hinh
@@ -69,9 +69,7 @@ class DanhSachDonNhan extends Component{
         super(props);
         this.state={
             loaddata:'false',
-            dsdonhangnhan:[
-            
-            ]
+            dsdonhangnhan:[]
         }   
     }
 
@@ -85,7 +83,7 @@ class DanhSachDonNhan extends Component{
         return(   
                 <View style={{flex:7,alignItems:'center',justifyContent:'center',backgroundColor:'#eaeae1'}}>     
 
-                 
+<MenuListApi></MenuListApi>
                   {this.state.scrolltotop==true ? <TouchableHighlight
                   underlayColor='white'
                    style={{alignItems:'center',width:x1,height:40,backgroundColor:'white'}} onPress={()=>{this.toTop()}}>
@@ -94,7 +92,7 @@ class DanhSachDonNhan extends Component{
                       <FlatList style={{flex:10/10}}
                       data={this.state.dsdonhangnhan}
                       ref="flatlis"
-                   
+                  
                      onTouchMove={() => {
                         
                         this.setState({
@@ -131,20 +129,20 @@ class DanhSachDonNhan extends Component{
         );
     }
 }
+
 class ThongTinLichsu extends Component{
     constructor(props){
         super(props);
         this.state={
             loaddata:'false',
-            dsdonhangnhan:[
-            ]
+            dsdonhangnhan:[]
         }   
     
 
     }
 
     toTop(){
-        
+       
         // use current
         this.refs.flatlis.scrollToOffset({ animated: true, offset: 0 });
        console.log( this.refs.flatlis.index+""); 
@@ -175,7 +173,7 @@ class ThongTinLichsu extends Component{
                          this.setState({
                              loaddata:false,
                          })
-                     }}
+                     }} 
 
                     onScroll={(e)=>{
                         let offset = e.nativeEvent.contentOffset.y;
@@ -256,40 +254,42 @@ class Top extends Component{
     }
 }
 
+export default class Danhsachdonnhan extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            a1:0,
+        };      
+    }
 
+   
+    render() {
+       
+        return (
+            
+            <View style={{flex:1, backgroundColor:'#669999'}}>
+                <View 
+                style={{flex:2/10,
+                    width:'100%',
+                    justifyContent:'flex-start',
+                    alignItems:'center',
+                    backgroundColor:'#669999'
+                }}>
+                    <Top ref='top' parent={this} />
+                </View>
 
-export default DanhSachDonNhan = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-      
-    fetch('http://192.168.1.12:8889/api/shipment/findAllShipmentStatus')
-    //fetch('https://reactnative.dev/movies.json')
-      .then((response) => response.json()) // pare response trả về thành json
-       .then((json) => {
-       console.log(json)
-            setLoading(false)
-            setData(json.data)
-            //setData(json.movies)
-    })// response trả ve data
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return (
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <ActivityIndicator/> : (
-        <FlatList
-      
-          data={data}
-          keyExtractor={({ item }, index) => item}
-          renderItem={({ item }) => (
-            <Text>{item.created}, {item.status}, 
-           </Text>// item. ltinh trong dong bui nhui
-          )}
-        />
-      )}
-    </View>
-  );
-};
+                <View 
+                style={{flex:7.9/10,
+                    width:'100%',
+                   backgroundColor:'white',
+                                                        
+                }}>
+                           
+                  {this.state.a1==0 ? <DanhSachDonNhan parent={this} navigation={this.props.navigation}/> :
+                  <View style={{flex:1}}>{this.state.a1==1? <ThongTinLichsu/>:<BaoMat/>}</View>}
+                  
+                </View>
+            </View>
+        );
+    }
+}

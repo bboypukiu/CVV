@@ -1,38 +1,78 @@
 import React, { Component } from 'react';
 import { View,Text,Image,Button,TouchableHighlight ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking} from 'react-native';
 import Icon from 'react-native-ionicons';
-import Information from '../Screen/Information'
+import Information from './Information';
+import CardView from 'react-native-cardview';
+import {doimatkhau,capnhap} from '../../API/API.js';
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
-class Thongtin extends Component{
+class Thongtin1 extends Component{
     constructor(props){
         super(props);
+       this.state={
+           
+       }
 
     }
+ 
     render(){
         return(
          
             <View style={{flex:1,flexDirection:'column',alignItems:'center',justifyContent:'flex-start',margin:10}}>
-        
-                <Text style={{fontWeight:'700',fontSize:16}}>Thông tin tài khoản</Text>
-                <View style={{width:x1*0.8,flexDirection:'row',alignItems:'center'}}>
-                    <Icon name='person-circle-outline' size={28} color='#669999'/>
-           
- 
-                </View>
- 
-            </View>
+               <Information ref="refs"  parent={this}
+                 />  
+            </View> 
          
         );
-        
+      
     }
 }
-
 
 class CapnhatThongtin extends Component{
     constructor(props){
         super(props);
+           this.state={
+          sodt:'',
+          tentk:'',
+          macode:'',
+          dateOfbirth: '',
+          isloading:false,
 
     }
+ 
+}
+async capnhap(){
+
+    if(this.state.sodt == '' || this.state.tentk== '' || this.state.dateOfbirth=='') alert('Vui lòng nhập đúng thông tin ');
+        if (this.state.sodt != '' && this.state.tentk != '' && this.state.dateOfbirth != '') {
+            this.setState({
+                isloading: true,
+            })
+            await fetch(
+                capnhap,
+                {
+                    method: 'PUT', 
+                    body: JSON.stringify({
+                        name: this.state.tentk,
+                        phone: this.state.sodt,
+                        birthday: this.state.dateOfbirth,
+                        code: this.state.macode
+                        
+                    }),
+                    headers:{
+                       'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                },
+            )
+            .then(response =>{
+
+        return response.json();
+    }) 
+        }
+  
+  
+    
+}
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:10}}>
@@ -43,56 +83,98 @@ class CapnhatThongtin extends Component{
                     <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                        
                     <Text>Tên tài khoản</Text>
                         <TextInput style={{width:x1/1.3,height:35,borderWidth:0.5,
-                        borderRadius:12,padding:10,
-                      
-                    }}
+                        borderRadius:12,padding:10}}
+                     onChangText={(text)=>{
+                            this.setState({
+                                tentk:text,
+                            })
+                        }}
                          placeholder='tên tài khoản' />                       
                     </View>
 
-                    <View style={{flexDirection:'column',justifyContent:'center',marginBottom:10}}>                        
+                    <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                      
                     <Text>Số điện thoại</Text>
                         <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
-                         placeholder='tên tài khoản' />                       
+                        onChangText={(text)=>{
+                            this.setState({
+                                sodt:text,
+                            })
+                        }}
+                         placeholder='số điện thoại' />                       
                     </View>
-                
 
-               
                     <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                        
                     <Text>Ngày sinh</Text>
                         <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
+                         onChangText={(text)=>{
+                            this.setState({
+                               dateOfbirth:text,
+                            })
+                        }}
                          placeholder='Ngày sinh' />                       
                     </View>
-
-                    <View style={{flexDirection:'column',justifyContent:'center',marginBottom:10}}>                        
-                    <Text>Nơi ở hiện tại</Text>
-                        <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
-                         placeholder='Nơi ở hiện tại' />                       
-                    </View>
-
-                    <TouchableHighlight style={{width:100,height:40,marginBottom:10,borderRadius:10,shadowColor: "#ff3300",
-                        shadowOffset: {
-                            width: 0,
-                            height: 1,
-                        },
-                        shadowOpacity: 0.23,
-                        shadowRadius: 2.32,
-                        elevation: 4,
-                        backgroundColor:'#669999',justifyContent:'center',alignItems:'center',}}>
-                        <Text style={{color:'white'}}> Cập nhật</Text>
-                    </TouchableHighlight>
+                    <TouchableHighlight  onPress={()=>{this.capnhap()}}
+              //onPress={()=>{this.capnhap()}}
+              style={{width:200,borderRadius:10,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
+                <Text style={{color:'white'}} >Cập nhập</Text>
+              </TouchableHighlight>
                     </View>
                     </ScrollView>
             </View>
         );
     }
 }
+//http://192.168.1.12:8889/ user-m-service/user/change-password
 
-
-class BaoMat extends Component{
+class BaoMat extends Component{ // đổi mật khẩu
     constructor(props){
+        
         super(props);
+        this.state={
+          oldPassword:'', 
+          newPassword:'' , 
+          isloading:false,
+        
+        };      
 
     }
+
+    async baomat(){
+       console.log(this.state.oldPassword+''+this.state.newPassword)
+        //if(this.state.oldPassword==''|| this.state.newPassword=='') alert('Vui lòng nhập đúng mật khẩu');
+        
+        if(this.state.oldPassword!=''&& this.state.newPassword!=''){
+            if(newPassword==newPassword){// đổi mật khẩu
+            this.setState({
+                isloading:true,
+        })
+ 
+          await fetch(
+        doimatkhau,
+        {
+            method:'PUT',
+            body:JSON.stringify({
+                oldPassword: this.state.oldPassword,
+                newPassword: this.state.newPassword,
+            }),
+            headers:{
+                'Content-Type':'application',
+                'ACCESS_TOKEN':'Bearer'+ token
+            },
+        },
+    )
+    .then(response =>{
+
+
+        return response.json();
+    }) 
+        
+      } /*else{
+          alert('Mật khẩu không trùng khớp')
+          }*/
+        }else{
+            alert('Vui lòng nhập đủ thông tin')
+        } }
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
@@ -100,8 +182,12 @@ class BaoMat extends Component{
                <View style={{flexDirection:'row',width:220,height:35,borderWidth:0.5,marginBottom:20,
                         borderRadius:5,padding:10,alignItems:'center',justifyContent:'center'}}>
                    <Icon name='key-sharp' size={20} color='#006699'/>
-                   <TextInput
-                   style={{width:200,height:35}}
+                   <TextInput style={{width:200,height:35}}
+                      onChangText={(text)=>{
+                            this.setState({
+                                oldPassword:text,
+                            })
+                        }}
                     placeholder='Nhập mật khẩu cũ'/>
                </View>
 
@@ -110,6 +196,11 @@ class BaoMat extends Component{
                    <Icon name='lock-closed-sharp' size={20} color='#006600'/>
                    <TextInput
                    secureTextEntry={true} style={{width:200,height:35}}
+                    onChangText={(text)=>{
+                            this.setState({
+                                newPassword:text,
+                            })
+                        }}
                     placeholder='Nhập mật khẩu mới'/>
                </View>
 
@@ -118,14 +209,19 @@ class BaoMat extends Component{
                    <Icon name='lock-closed-sharp' size={20} color='#006600'/>
                    <TextInput
                    secureTextEntry={true} style={{width:200,height:35}}
+                     onChangText={(text)=>{
+                            this.setState({
+                                newPassword:text,
+                            })
+                        }}
                     placeholder='Nhập lại mật khẩu mới'/>
                </View>
                
-               <Button title='Cập nhật' color='#006699' />
-               {/* <Text 
-              onPress={()=>{}}  style={{marginTop:5,color:'#1aa3ff',textDecorationLine:'underline'}}>Quên mật khẩu ?</Text>
-   */}
+               <Button title='Cập nhật' color='#006699'
+               onPress={()=>{this.baomat()}} 
                
+                />
+            
 
             </View>
         );
@@ -164,7 +260,7 @@ class Top extends Component{
                   <Image
                          style={{width:70,height:70,marginTop:10,borderRadius:35}}
                          source={{uri:'https://scontent.fhan3-3.fna.fbcdn.net/v/t1.0-9/69274800_687532738433940_7394291932463104000_n.jpg?_nc_cat=101&_nc_sid=85a577&_nc_ohc=yeiWRUfQhj4AX9dKOgl&_nc_ht=scontent.fhan3-3.fna&oh=c86c9a7e1314a9eca72b77e3fa19208d&oe=5EDFA3A0'}} />           
-                         <Text style={{marginTop:5,color:'white',marginBottom:17}}>The Flash</Text>
+                         <Text style={{marginTop:5,color:'white',marginBottom:17}}>{this.props.data.shippingFromName}</Text>
                   </View>
                         <TouchableHighlight
                         style={{position:'absolute',margin:5,}}
@@ -215,6 +311,7 @@ class Hoso extends Component {
     constructor(props){
         super(props);
         this.state={
+            data:{},
             a1:0,
         };      
     }
@@ -224,13 +321,37 @@ class Hoso extends Component {
         
         AsyncStorage.removeItem('statelogin3');
     }
- 
 
-    render() {
-       
+ componentDidMount(){
+    this.loaddt();//console.log( this.props.parent.state.name+" 111");
+  }
+    loaddt() {
+      
+   // fetch('http://222.252.26.108:8889/api/shipment/findShipmentTrackingDetail?orderId=626') 
+    fetch('http://192.168.1.12:8889/api/shipment/findShipmentTrackingDetail?orderId=626') 
+      .then((response) => response.json()) 
+       .then((json) => {
+      
+       this.setState({
+         data:json.data,
+       })
+
+       //console.log(this.state.data.status)
+            //setData(json.movies)
+    })// response trả ve data
+      .catch((error) => console.error(error))
+      .finally(() => this.setState({
+        isLoading:false,
+      }))
+  }
+    render() { 
         return (
+
+
+            
             
             <View style={{flex:1, backgroundColor:'#669999'}}>
+
                 <View 
                 style={{flex:4/10,
                     width:'100%',
@@ -238,7 +359,7 @@ class Hoso extends Component {
                     alignItems:'center',
                     backgroundColor:'#669999'
                 }}>
-                    <Top ref='top' parent={this} navigation={this.props.navigation}/>
+                    <Top ref='top' parent={this} data={this.state.data} navigation={this.props.navigation}/>
                 </View>
 
                 <View 
@@ -249,7 +370,7 @@ class Hoso extends Component {
                     borderTopLeftRadius:20,                                       
                 }}>                   
                     
-                  {this.state.a1==0 ? <Thongtin parent={this} navigation={this.props.navigation}/> :<View style={{flex:1}}>{this.state.a1==1? <CapnhatThongtin/>:<BaoMat/>}</View>}
+                  {this.state.a1 ==0 ? <Thongtin1 parent={this} navigation={this.props.navigation}/> :<View style={{flex:1}}>{this.state.a1==1? <CapnhatThongtin/>:<BaoMat/>}</View>}
                   
                 </View>
             </View>

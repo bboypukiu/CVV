@@ -11,9 +11,8 @@ import {
   Alert
 } from 'react-native';
 import Icon from 'react-native-ionicons'
-import {login,dangki,danhsachdonhang} from '../../API/API.js';
+import {login,dangki,quenmatkhau} from '../../API/API.js';
  export default class Login extends Component{
-   
     constructor(props){
         super(props);
         this.state={
@@ -23,8 +22,24 @@ import {login,dangki,danhsachdonhang} from '../../API/API.js';
         }
     }
 
- 
+    async ghifile()
+      {
+        const taikhoan={
+          sodt:this.state.sodt,
+          password:this.state.password
+        }
+      //  console.log(taikhoan.sodt +" "+taikhoan.password);
+        
+        try {
+          await AsyncStorage.setItem('statelogin3',JSON.stringify(taikhoan) );
+        } catch (error) {
+          // Error saving data
+        }
+    }
+
    async login(){
+
+    //console.log(this.state.sodt +" "+this.state.password);
       if(this.state.sodt=='' || this.state.password=='') alert('Vui lòng điền đẩy đủ thông tin');
       if(this.state.sodt!='' && this.state.password!=''){
 
@@ -32,18 +47,77 @@ import {login,dangki,danhsachdonhang} from '../../API/API.js';
           isloading:true,
         })
         try {
-          await fetch('https://192.168.1.12:8889/user-m-service/shipper/register' )
+          await fetch(
+            login,
+            {
+              method: 'POST',         
+              body: JSON.stringify({
+                username:this.state.sodt,
+                password:this.state.password,
+              }),
+              headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+             
+              },
+            },
+          )
             .then((response) => response.json())
             .then((responseData) => {
+              console.log(responseData)
               if(responseData){
-                 <FlatList
-                 data={data}
-                 keyExtractor = {({item}, index)=> item}
-                 renderItem={({item}) => (
-                 <Text>{item.fullname},{item.phone},{item.password},{item.address},{item.dateOfBirth}, </Text>
-                 )}
-                 ></FlatList>         
-              }             
+          if(responseData.message =='login success'){
+             this.ghifile();
+               this.props.navigation.navigate('home') 
+              }  
+               else{
+              alert('Sai thông tin đăng nhập')}
+            }            
+              console.log(responseData);
+              
+            if(responseData.message=='login fail'){
+                alert('Đăng nhập không thành công')               
+              }
+                }).finally(() => {
+                  this.setState({ isloading: false });
+                });
+            }catch (error) {
+              alert(error +'đăng nhập không thành công')
+            }
+            
+          }
+         }  
+   
+/*
+async quenmatkhau(){
+  if(this.state.sodt=='') alert('Vui lòng điền đẩy đủ thông tin');
+  if(this.state.sodt!=''){
+
+        this.setState({
+          isloading:true,
+        })
+        try {
+          await fetch(
+            quenmatkhau,
+            {
+              method: 'PUT',         
+              body: JSON.stringify({
+                username:this.state.sodt,
+ 
+              }),
+              headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+               
+              },
+            },
+          )
+            .then((response) => response.json())
+            .then((responseData) => {
+              if(responseData.message =='login success'){
+                this.props.navigation.navigate('home') 
+              }  
+               else{
+              alert('Sai thông tin đăng nhập')
+            }            
               console.log(responseData);
               
               if(responseData.message=='login fail'){
@@ -53,24 +127,13 @@ import {login,dangki,danhsachdonhang} from '../../API/API.js';
                   this.setState({ isloading: false });
                 });
             }catch (error) {
-              alert(error +'dang nhap khong  dc')
+              alert(error +'đăng nhập không thành công')
             }
+         }  
+   }
+*/
 
-            
-           
-          }
 
-     try {  //GET
-       fetch('http://192.168.1.12:8889/user-m-service/shipper/register')  
-      .then(res => res.json())
-      .then(resJson => {
-     return json.data;
-      })
-     } catch (error) {
-       alert(error+'1');
-     }
-
-    }
     render(){
       return(
         
@@ -112,7 +175,8 @@ import {login,dangki,danhsachdonhang} from '../../API/API.js';
                 <Text style={{color:'white'}}>Đăng nhập</Text>
               </TouchableHighlight>
               <Text 
-              onPress={()=>{this.props.navigation.navigate('forgotpassword')}}  style={{marginTop:5,color:'#1aa3ff',textDecorationLine:'underline'}}>Quên mật khẩu ?</Text>
+              onPress={()=>{this.props.navigation.navigate('forgotpassword')}} 
+               style={{marginTop:5,color:'#1aa3ff',textDecorationLine:'underline'}}>Quên mật khẩu ?</Text>
            </View>
            <View style={{flex:1,justifyContent:'flex-start',alignItems:'center',marginTop:20}}>
             <TouchableHighlight

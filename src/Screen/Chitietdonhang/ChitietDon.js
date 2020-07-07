@@ -1,81 +1,105 @@
+import React, { Component } from 'react';
+import { View,Text,Image,TouchableHighlight,ScrollView,Dimensions,Linking } from 'react-native';
+import Icon from 'react-native-ionicons';
 
-// import React,{Component} from 'react';
-// import {AppRegistry,ActivityIndicator, ListView,Text,View} from 'react-native'
-// export default class ChiTietDon extends Component{
-//     constructor(props){
-//         super(props);
-//         this.state= {
-//             isLoading:true,
-//             clonedMovies: []
-//         }
+let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+export default class ChitietDon extends Component {
+    constructor(props){
+        super(props);
 
-//     }
-//     componentDidMount(){
-//         console.log(111111)
-//         fetch('http://192.168.1.12:8889/api/app-shipper/shipment/findShipmentTracking?statusId=1')
-//         .then ((response) => response.json()) 
-//         .then  ((responseJson)=> {
-//             var  standarDataSource = new ListView.dataSource({rowHasChanged:(r1,r2) => r1 !== r2});
-//             console.log(responseJson);
-
-//             this.setState({
-//                 isLoading: false,
-//                 clonedMovies: standarDataSource.cloneWithRows(responseJson.movies)
-//             });
-//         }).catch((error) => {
-//             console.error(error, 11111111);
-//         }); 
-   
-//     }
-//     render(){
+    }
+    
+    chiduong(latitude,longitude){
+        this.props.navigation.navigate('map',{latitude:latitude,longitude:longitude});
+    
         
-// if(this.state.isLoading){
-//   return (
-//       <View>
-//       <ActivityIndicator/>
-      
-//       </View>
-//   )  
-// }
-//         return (
-//             <View style={{flex: 1, paddingTop: 25}}>
-//             <ListView
-      
-//             ></ListView>
-//             </View>
+    }
+    render() {
+        return (
+         
+                <ScrollView 
+              
+                style={{flex:1,margin:2}}>
+                    <View style={{flexDirection:'column',alignSelf:'baseline',justifyContent:'flex-start',alignItems:'center',paddingBottom:20}}>
+                        <ScrollView>
+                        <View style={{alignSelf:'baseline',width:x1-10,borderWidth:0.5,padding:5,borderRadius:10,
+                            backgroundColor:'white',margin:5,flexDirection:'column'}}>
+                            <Text style={{margin:5,marginBottom:10,fontWeight:'bold',color:'#339966'}}>Người gửi hàng</Text>
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <Icon name='person-sharp' size={20} color='green' />
+                                <Text style={{marginLeft:5}}>Nguyen Thi Thuong</Text>
+                            </View>
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <View style={{flexDirection:'row'}}>
+                                <Icon name='call-sharp' size={20} color='red' />
+                                <Text style={{marginLeft:5}}>0362050508</Text>
+                                </View>
+                                <View style={{flex:6,alignItems:'flex-end'}}>
+                                <Text onPress={()=>{Linking.openURL('tel:0362050508');}}
+                                 style={{textDecorationLine:'underline',color:'green',marginRight:40}}>Gọi ngay</Text>
+                                </View>
+                            </View>
+
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <View style={{flexDirection:'row',flex:5}}>
+                                <Icon name='location-sharp' size={20} color='#99ccff' />
+                                <Text style={{marginLeft:5}}>Ngõ 23 Phùng khoang Văn Quán Hà Đông</Text>
+                                </View>
+                                {this.props.nhan!='ok' ?       <View style={{flex:3,alignItems:'flex-end'}}>
+                                <Text onPress={()=>{this.chiduong(21.0281545,105.8034205);}}
+                                 style={{textDecorationLine:'underline',color:'green',marginRight:40}}>Chỉ đường</Text>
+                                </View>:<View></View>}
+                            </View>
+                        </View>
+
+                         {this.props.nhan!='ok' ? 
+                        <View style={{alignSelf:'baseline',width:x1-10,borderWidth:0.5,padding:5,borderRadius:10,
+                            backgroundColor:'white',margin:5,flexDirection:'column'}}>
+                            <Text style={{margin:5,marginBottom:10,fontWeight:'bold',color:'#339966'}}>Người nhận hàng</Text>
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <Icon name='person-sharp' size={20} color='green' />
+                                <Text style={{marginLeft:5}}>Trần Văn Quang</Text>
+                            </View>
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <View style={{flexDirection:'row'}}>
+                                <Icon name='call-sharp' size={20} color='red' />
+                                <Text style={{marginLeft:5}}>0974399005</Text>
+                                </View>
+                                <View style={{flex:6,alignItems:'flex-end'}}>
+                                <Text onPress={()=>{Linking.openURL('tel:0362050508');}}
+                                 style={{textDecorationLine:'underline',color:'green',marginRight:40}}>Gọi ngay</Text>
+                                </View>
+                            </View>
+
+                            <View style={{flexDirection:'row',marginBottom:10}}>
+                                <View style={{flexDirection:'row',flex:5}}>
+                                <Icon name='location-sharp' size={20} color='#99ccff' />
+                                <Text style={{marginLeft:5}}>Học viện công nghệ bưu chính viễn thông</Text>
+                                </View>
+                                {this.props.nhan!='ok' ?    <View style={{flex:3,alignItems:'flex-end'}}>
+                                <Text onPress={()=>{this.chiduong(20.981871,105.7915193);}}
+                                 style={{textDecorationLine:'underline',color:'green',marginRight:40}}>Chỉ đường</Text>
+                                </View> :<View></View>}
+                            </View>
+                        </View> :<View></View>}
+
+                        <View style={{flex:4/10,width:x1-10,borderWidth:0.5,padding:5,borderRadius:10,
+                            backgroundColor:'white',margin:5,flexDirection:'column'}}>
+                            <Text style={{margin:5,marginBottom:20,fontWeight:'bold',color:'#339966'}}>Nội đung đơn hàng</Text>
+                            <Text >Cần vận chuyển 5 thùng nước  từ Ngõ 23 Phùng khoang đi Học  viện công nghệ bưu chính,Gia 30k</Text>
+                            <Text>hàng dễ vỡ ... yêu cầu vận chuyển cẩn thận cho shop !</Text>
+                        </View>
+
+
+                     {this.props.nhan!='ok' ?   <View style={{alignItems:'center',}}>
+                        <TouchableHighlight style={{justifyContent:'center',alignItems:'center',width:100,height:35,backgroundColor:'#339966',marginTop:50}} >
+                           <Text style={{color:'white'}}>Nhận đơn</Text>
+                        </TouchableHighlight>
+                        </View>:<View></View>}
+                        </ScrollView>
+                    </View>
+                </ScrollView>
             
-//         );
-//     }
-// }
-// AppRegistry.registerComponent (' example of', () => ChiTietDon);
-
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
-
-export default App = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-     
-    fetch('http://192.168.1.12:8889/api/app-shipper/shipment/findShipmentTracking?statusId=1')
-      .then((response) => response.json())
-      .then((json) => setData(json.movies))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return (
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <ActivityIndicator/> : (
-        <FlatList
-          data={data}
-          keyExtractor={({ id }, index) => id}
-          renderItem={({ item }) => (
-            <Text>{item.title}, {item.releaseYear}</Text>
-          )}
-        />
-      )}
-    </View>
-  );
-};
+        );
+    }
+}

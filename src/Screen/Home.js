@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage1 from './HomePage';
 import Icon from 'react-native-ionicons'
+import {GetAllFoodsServer} from '../../API/API.js'
 
 import ChitietDon from './Chitietdonhang/ChitietDon';
 import MapView, { AnimatedRegion,PROVIDER_GOOGLE } from 'react-native-maps'; 
@@ -22,7 +23,7 @@ import {
     AsyncStorage
   } from 'react-native';
 
-  import File from'./File.js';
+  import File1 from'./File';
   function Donmoi({navigation}) {
     return (
       <HomePage1 navigation={navigation} />
@@ -48,7 +49,7 @@ import {
   }
   function Canhan({navigation}) {
     return (
-         <File navigation={navigation} />
+         <File1 navigation={navigation} />
     );
   }
 
@@ -60,6 +61,9 @@ import {
          <ChitietDon navigation={navigation} />
     );
   }
+
+
+  
 
   function TabBottom() {
     return (
