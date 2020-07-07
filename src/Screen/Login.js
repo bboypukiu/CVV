@@ -63,18 +63,15 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
           )
             .then((response) => response.json())
             .then((responseData) => {
-              console.log(responseData)
-              if(responseData){
-          if(responseData.message =='login success'){
-             this.ghifile();
-               this.props.navigation.navigate('home') 
+              if(responseData.message =='login success'){
+                this.props.navigation.navigate('home') 
               }  
                else{
-              alert('Sai thông tin đăng nhập')}
+              alert('Sai thông tin đăng nhập')
             }            
               console.log(responseData);
               
-            if(responseData.message=='login fail'){
+              if(responseData.message=='login fail'){
                 alert('Đăng nhập không thành công')               
               }
                 }).finally(() => {
@@ -83,10 +80,8 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
             }catch (error) {
               alert(error +'đăng nhập không thành công')
             }
-            
-          }
          }  
-   
+   }
 /*
 async quenmatkhau(){
   if(this.state.sodt=='') alert('Vui lòng điền đẩy đủ thông tin');

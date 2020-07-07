@@ -1,3 +1,7 @@
+
+
+
+
 import React, { Component } from 'react';
 import { View,Text,Image,Button,TouchableHighlight ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking} from 'react-native';
 import Icon from 'react-native-ionicons';

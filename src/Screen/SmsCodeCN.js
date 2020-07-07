@@ -67,7 +67,7 @@ import Icon from 'react-native-ionicons'
        // this.setState{{loadingVisible: true}}
         if(this.state.sodt=='') alert('Vui lòng nhập đúng số điện thoại');
         if(this.state.sodt!=''){
-          if(this.state.sodt){
+          if(this.state.sodt=='1900'){
             this.ghifile();
         
             this.setState({ spinner: false });

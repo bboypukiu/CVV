@@ -1,4 +1,3 @@
-  
 export const host = 'http://192.168.1.12:8889/api';
 export const login ='http://192.168.1.12:8889/user-m-service/shipper/login';
 export const dangki =  ' http://192.168.1.12:8889/user-m-service/shipper/register';
@@ -11,3 +10,4 @@ export const smscapnhap = 'http:// 192.168.1.12/user-m-service/shipper/update?ph
 export const danhsachdonhangchidinh = host + '';
 export const changPassWord = host + '';
 export const updateProfile = host + '';
+

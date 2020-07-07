@@ -229,7 +229,7 @@ export default class Map extends Component{
           timkiem:'',
            latitude:20.9806175,latitudeme:20.9806175,  latitudeend:0,
            longitude: 105.7869923,longitudeme:105.7869923, longitudeend:0,
-
+// vị trí cửa hàng
           cuahang:[{latitude:20.9805409,longitude:105.7878986},
             {latitude:20.9866488,longitude:105.7869923},
             {latitude:21.0281545,longitude:105.8034205},

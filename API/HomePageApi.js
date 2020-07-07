@@ -78,7 +78,7 @@ export default class HomePageAPI extends Component {
 
   loaddt() {
       
-    fetch('http://192.168.1.12:8889/api/app-shipper/shipment/findShipmentNonShip') 
+    fetch('http://222.252.26.108:8889/api/app-shipper/shipment/findShipmentNonShip') 
       .then((response) => response.json()) 
        .then((json) => {
      
