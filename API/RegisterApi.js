@@ -55,6 +55,12 @@ export default class RegisterAPI extends Component {
     console.log(this.state.hovaten+" "+this.state.sodt +" "+ this.state.ngaysinh  +" "+this.state.matkhau);
       if(hovaten!='' &&ngaysinh !='' &&sodt!=''  &&matkhau!='' &&nhaplaimk!='') {
         if(matkhau==nhaplaimk){// dang ki tai khoan len server
+this.props.navigation.navigate("xacthuc",{
+  phoneNumber:'pusu',
+  code:'123',
+  password:'hehe',
+});
+
 fetch(dangki, {
   method: 'POST',
   headers: {
@@ -68,7 +74,7 @@ fetch(dangki, {
     dateOfBirth:this.state.ngaysinh,
   })
 });
-          //this.props.natigation.navigate('login')
+        
         }
         else {alert('Mật khẩu bạn nhập không khớp')}
       }
@@ -131,55 +137,3 @@ fetch(dangki, {
   
           }
 }
-class MacodeDki extends Component{
-  constructor(props){
-    super(props);
-    this.state= {
-      sodt: '',
-      matkhau:'',
-      smscode: '',
-    }
-  }
-  async macode(){
-    // console.log('aa')
- const {sodt,matkhau,smscode}=this.state;
-    //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
-     console.log('aa')
-      if(sodt!=''  &&matkhau!='' &&smscode!='') {
-        if(smscode==smscode){
-     fetch(macodedki, {
-            method:'GET',
-            headers:{
-                'Content-Type': 'application/json; charset=UTF-8',
-},
-           body: JSON.stringify({
-               phoneNumber: this.state.sodt,
-               code: this.state.smscode,
-               password: this.state.matkhau,
-})
-  });
-      // this.props.natigation.navigate('register');
-  }
-      else {
-         alert('Mã code sai vui lòng nhập lại ');
-  
-}  
-      }else{alert('Vui lòng nhập đúng mã code')};
-}
-
-
-  render(){
-  return(
-    <CardView  height={100} flex={9/10} width={this.state.x} marginTop ={90}>
-    <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-                <Text style={{fontWeight:'700',fontSize:16,marginBottom:10}}>Nhap ma code </Text>
-               <View style={{flexDirection:'row',width:220,height:35,borderWidth:0.5,marginBottom:20,
-                        borderRadius:5,padding:10,alignItems:'center',justifyContent:'center'}}>
-                   <Icon name='key-sharp' size={20} color='#006699'/>
-                   <TextInput
-                   style={{width:200,height:35}}
-                    placeholder='Nhập mã code'/>
-                    <Text style={{color:'white'}} >OK</Text>
-               </View></View></CardView>
-  )
-}}

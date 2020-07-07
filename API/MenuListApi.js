@@ -14,8 +14,8 @@ export default MenuListApi = () => {
 
   useEffect(() => {
       
-   // fetch('192.168.1.12/api/app-shipper/order/updateShipper?shipmentId=')
-    fetch('https://reactnative.dev/movies.json')
+    fetch('https://192.168.1.12/api/app-shipper/order/updateShipper?shipmentId=')
+    //fetch('https://reactnative.dev/movies.json')
       .then((response) => response.json()) // pare response trả về thành json
        .then((json) => {
        console.log(json)
@@ -35,8 +35,9 @@ export default MenuListApi = () => {
           data={data}
           keyExtractor={({ item }, index) => item}
           renderItem={({ item }) => (
-            //<Text>{item.created}, {item.status}, 
-            <Text> { item.movies}</Text>
+            <Text>{item.created}, {item.status}, 
+           {/*<Text> { item.movies}*/}
+            </Text>
            // item. ltinh trong dong bui nhui
           )}
         />

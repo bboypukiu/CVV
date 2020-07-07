@@ -1,0 +1,79 @@
+ import React, { Component,useEffect, useState} from 'react';
+import {View,  TouchableHighlight,TextInput,Image,Text,ScrollView,Dimensions,FlatList,ActivityIndicator, Animated,Linking} from 'react-native';
+import Icon from 'react-native-ionicons';
+import CardView from 'react-native-cardview';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {macodedki} from '../../API/API.js';
+let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+ 
+export default class MacodeDki extends Component{
+  constructor(props){
+    super(props);
+    this.state= {
+      sodt: '',
+      matkhau:'',
+      smscode: '',
+    }
+  }
+  async macode(){
+    // console.log('aa')
+    const xacthuc='http://192.168.1.12:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.pass;
+ console.log(xacthuc)
+ const {sodt,matkhau,smscode}=this.state;
+    //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
+    
+      if(sodt!=''  &&matkhau!='' &&smscode!='') {
+        if(smscode==smscode){
+     fetch(macodedki, {
+            method:'GET',
+            headers:{
+                'Content-Type': 'application/json; charset=UTF-8',
+},
+ 
+  });
+      // this.props.natigation.navigate('register');
+  }
+      else {
+         alert('Mã code sai vui lòng nhập lại ');
+  
+}  
+      }else{alert('Vui lòng nhập đúng mã code')};
+}
+
+
+  render(){
+  return(
+    <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+    <OTPInputView
+    style={{width: '70%', height: 100}}
+    pinCount={6}
+    // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+    // onCodeChanged = {code => { this.setState({code})}}
+    autoFocusOnLoad
+    codeInputFieldStyle={{
+        color:'black',
+
+    width: 30,
+    height: 45,
+    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderColor:'red',
+  }}
+    codeInputHighlightStyle={{borderColor: "#03DAC6",}}
+    onCodeFilled = {(code => {
+        console.log(`Code is ${code}, you are good to go!`)
+    })}
+
+    
+/> 
+<TouchableHighlight
+onPress={()=>{this.macode()}}
+ style={{justifyContent:'center',alignItems:'center'}}>
+
+<Text>OK</Text>
+</TouchableHighlight>
+
+    </View>
+  )
+
+}}

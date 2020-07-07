@@ -19,6 +19,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Splash from './src/Screen/Slpash';
 import Home from './src/Screen/Home';
 import ForgotPassword from './src/Screen/ForgotPassword';
+import Xacthuc from './src/Screen/Macodedki';
 console.disableYellowBox = true;
 
 function Login1({navigation}){ //login
@@ -29,6 +30,12 @@ function Login1({navigation}){ //login
 function Register1({navigation}){//dang ki
   return(
     <Register navigation={navigation} />
+  );
+}
+function Xacthuc1({naviagtion,route}){
+  const {phoneNumber,code,password}= route.params;
+  return(
+    <Xacthuc naviagtion={naviagtion} code={code} pass={password} phoneNumbe={phoneNumber}/>
   );
 }
 function Home1({navigation}){
@@ -89,6 +96,7 @@ export default class App extends Component{
        }} name="login" component={Login1} />
        <Stack.Screen options={{headerShown:false,}} name="register" component={Register1} />   
        <Stack.Screen options={{headerShown:false,}} name="forgotpassword" component={ForgotPassword1}/>
+         <Stack.Screen options={{headerShown:false,}} name="xacthuc" component={Xacthuc1} />    
      </Stack.Navigator>
    </NavigationContainer>
     )

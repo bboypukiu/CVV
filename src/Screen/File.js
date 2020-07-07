@@ -59,7 +59,7 @@ async capnhap(){
                         name: this.state.tentk,
                         phone: this.state.sodt,
                         birthday: this.state.dateOfbirth,
-                        code: this.state.macode
+                        
                         
                     }),
                     headers:{
