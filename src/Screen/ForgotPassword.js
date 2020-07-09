@@ -30,6 +30,10 @@ let x1=Dimensions.get('window').width;
        // this.setState{{loadingVisible: true}
        //if(this.state.sodt) alert('Vui lòng nhập đúng sdt');
         if(this.state.sodt!=''){
+
+         // this.props.natigation.navigate("xacthucCN",{
+         //   sodt:''
+          //})
             this.setState({
               isloading:true,
             })

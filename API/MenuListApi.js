@@ -3,45 +3,90 @@ import { View,Text,Image ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking,A
 import Icon from 'react-native-ionicons';
 import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
 
-
 import {Picker} from '@react-native-community/picker';
 
 let x1=Dimensions.get('window').width;// lay ra chieu rong cua man hinh
 
-export default MenuListApi = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
+class ItemDonhang extends Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+        }
+    } 
+     
+    render() {
+    return(
+    
+        <View style={{borderRadius:10,backgroundColor:'white',marginTop:12,padding:10,  
+        borderBottomWidth:0.4}}>
+       
       
-    fetch('https://192.168.1.12/api/app-shipper/order/updateShipper?shipmentId=')
-    //fetch('https://reactnative.dev/movies.json')
-      .then((response) => response.json()) // pare response trả về thành json
-       .then((json) => {
-       console.log(json)
-            setLoading(false)
-            //setData(json.data)
-            setData(json.movies)
-    })// response trả ve data
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
+           <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Tên Shop :</Text>
+           <Text style={{fontSize:15}}> {this.props.ten}</Text></View>
+                    <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Địa Chỉ Shop :</Text>
+           <Text style={{fontSize:13}}> {this.props.diachi} {this.props.xa} {this.props.huyen} {this.props.tinh}</Text></View>
+                      <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>SĐT Shop :</Text>
+           <Text style={{fontSize:15}}> {this.props.sdtshop}</Text></View>
+           <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Địa Chỉ Nhận :</Text>
+            <Text style={{fontSize:15}}> {this.props.diachinhan}</Text></View>
+          
+        </View>
+     
+   
+     ) }
+    }
+export default class MenuListApi extends Component {
+constructor(props){
+  super(props);
+  this.state ={
+shipmentId:'',
+  }
+  console.log('du lieu aaaa',this.props)
+}
+async nhandon(){
+  const {shipmentId, ten, xa, huyen, tinh, sdtshop} = this.props.route.params
+  const nhandon ='http://222.252.26.108:8889/api/app-shipper/order/updateShipper?shipmentId='+shipmentId;
+     console.log(nhandon)
+     //sconst { shipmentId }= this.state;
+        if (shipmentId!= '' ){
+          if (shipmentId==shipmentId){
+            fetch(nhandon,{
 
+              method:'POST',
+              body: JSON.stringify({
+                shipmentId: this.state.shipmentId
+              }),
+              headers:{
+                'Content-Type': 'application/json'
+              },
+
+            },
+            )
+          }
+        
+}
+}
+render(){
+    const {shipmentId, ten, xa, huyen, tinh, sdtshop} = this.props.route.params
+  //  alert(JSON.stringify(this.props.route.params))
   return (
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <ActivityIndicator/> : (
-        <FlatList
-      
-          data={data}
-          keyExtractor={({ item }, index) => item}
-          renderItem={({ item }) => (
-            <Text>{item.created}, {item.status}, 
-           {/*<Text> { item.movies}*/}
-            </Text>
-           // item. ltinh trong dong bui nhui
-          )}
-        />
-      )}
-    </View>
-  );
-};
+  
+     
+                 <ItemDonhang 
+                  ten ={ten}
+                  xa={xa}
+                   huyen ={huyen}
+                   tinh ={tinh}
+                 sdtshop ={sdtshop}
+                
+                 
+                shipmentId = {shipmentId}
+                 />     
+    
+   
+  )
+}
+}
+

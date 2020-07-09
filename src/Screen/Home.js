@@ -105,7 +105,7 @@ import {
                   </View>
                 );
               }
-          }} name="luu" component={Luu} />
+          }} name="luu" component={DanhSachDonNhan} />
           <Tab.Screen
            options={{
              title:'Hồ sơ',

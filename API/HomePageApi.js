@@ -1,7 +1,10 @@
+
 import React, { Component,useEffect, useState} from 'react';
 import {View,Image,RefreshControl,TouchableHighlight,Text,ScrollView,Dimensions,FlatList,
-ActivityIndicator, Animated,Linking} from 'react-native';
+ActivityIndicator, Animated,Linking, Alert} from 'react-native';
 import Icon from 'react-native-ionicons';
+
+
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
 
 class ItemDonhang extends Component{
@@ -22,10 +25,12 @@ class ItemDonhang extends Component{
         }} >
            <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Tên Shop :</Text>
            <Text style={{fontSize:15}}> {this.props.ten}</Text></View>
-                    <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Địa Chỉ :</Text>
+                    <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Địa Chỉ Shop :</Text>
            <Text style={{fontSize:13}}> {this.props.diachi} {this.props.xa} {this.props.huyen} {this.props.tinh}</Text></View>
                       <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>SĐT Shop :</Text>
            <Text style={{fontSize:15}}> {this.props.sdtshop}</Text></View>
+           <View style={{ flexDirection:'row'}}><Text style={{fontSize:15}}>Địa Chỉ Nhận :</Text>
+            <Text style={{fontSize:15}}> {this.props.diachinhan}</Text></View>
           
         </View>
         </TouchableHighlight>
@@ -42,7 +47,15 @@ class ItemDonhang extends Component{
                </View>
                </TouchableHighlight>
                <TouchableHighlight underlayColor='#f0f5f5'
-                  onPress={()=>{this.props.navigation.navigate('luu')}}>
+                  onPress={()=>{
+                    //alert(this.props.donnhan)
+                    this.props.navigation.navigate('luu', 
+                   {shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa, huyen: this.props.huyen, tinh: this.props.tinh,
+                   sdtshop:this.props.sdtshop
+                   
+                   })
+                    
+                    }}>
                <View style={{flexDirection:'row'}}>
                    <Icon name='bookmark-outline' color='#006699' size={23}/>
                    <Text style={{marginLeft:3}}>Nhận đơn</Text>
@@ -88,8 +101,11 @@ export default class HomePageAPI extends Component {
            //this.setState({refreshing: true});
        })
             //setData(json.movies)
-    })// response trả ve data
-      .catch((error) => console.error(error))
+    })// response tr? ve data
+      .catch((error) => {
+        console.error(error)
+        alert('tải dữ liệu bị lỗi');
+      })
       .finally(() => this.setState({
         isLoading:false,
         //this.setState({refreshing: false});
@@ -119,6 +135,7 @@ export default class HomePageAPI extends Component {
                 <FlatList style={{flex:1/10,width:x1-6}}
                  data={this.state.data} 
                  renderItem={({ item,index }) => {
+                  // console.log('111',item)
                  return( <ItemDonhang 
                   ten={item.shippingFromName} 
                   diachi={item.shippingFromStreet} 
@@ -126,7 +143,9 @@ export default class HomePageAPI extends Component {
                    huyen={item.shippingFromDistrict} 
                    tinh={item.shippingFromProvince} 
                  sdtshop={item.shippingFromPhone} 
+                 diachinhan={item.shippingToAddress}
                  navigation={this.props.navigation} 
+                 donnhan={item?.shipmentId}
                  />
             
                  );
@@ -160,3 +179,6 @@ export default class HomePageAPI extends Component {
   );
           }
 }
+
+
+

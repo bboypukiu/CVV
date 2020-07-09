@@ -20,7 +20,17 @@ import Splash from './src/Screen/Slpash';
 import Home from './src/Screen/Home';
 import ForgotPassword from './src/Screen/ForgotPassword';
 import Xacthuc from './src/Screen/Macodedki';
+import XacthucCN from './src/Screen/SmsCodeCN';
+import XacthucquenMK from './src/Screen/MaQuenMK';
+import MenuListApi from './API/MenuListApi';
+
 console.disableYellowBox = true;
+function MenuListApi1({navigation}){ //nhập đơn
+const {shipmentId }= route.params;
+  return(
+    <MenuListApi navigation={navigation} shipmentId={shipmentId}/>
+  );
+}
 
 function Login1({navigation}){ //login
   return(
@@ -32,12 +42,19 @@ function Register1({navigation}){//dang ki
     <Register navigation={navigation} />
   );
 }
-function Xacthuc1({naviagtion,route}){
+function Xacthuc1({naviagtion,route}){// sms dki
   const {phoneNumber,code,password}= route.params;
   return(
     <Xacthuc naviagtion={naviagtion} code={code} pass={password} phoneNumbe={phoneNumber}/>
   );
 }
+function XacthucCN1({naviagtion,route}){
+  const {phone,code,name,birthday}= route.params;
+  return(
+    <XacthucCN naviagtion={naviagtion} code={code} name={name} phone={phone} birthday={birthday}/>
+  );
+}
+
 function Home1({navigation}){
   return(
     <Home navigation1={navigation}/>
@@ -46,6 +63,12 @@ function Home1({navigation}){
 function ForgotPassword1({navigation}){//quên mật khẩu
   return(
     <ForgotPassword navigation={navigation} />
+  );
+}
+function XacthucquenMK1 ({navigation,route}){//mã code quen mật khẩu
+const {verificationCode,username,newPassword}= route.params;
+  return(
+    <XacthucquenMK navigation={navigation} verificationCode={verificationCode} username={username} newPassword={newPassword} />
   );
 }
 const Stack = createStackNavigator();
@@ -96,7 +119,8 @@ export default class App extends Component{
        }} name="login" component={Login1} />
        <Stack.Screen options={{headerShown:false,}} name="register" component={Register1} />   
        <Stack.Screen options={{headerShown:false,}} name="forgotpassword" component={ForgotPassword1}/>
-         <Stack.Screen options={{headerShown:false,}} name="xacthuc" component={Xacthuc1} />    
+         <Stack.Screen options={{headerShown:false,}} name="xacthuc" component={Xacthuc1} />   
+         <Stack.Screen options={{headerShown:false,}} name="xacthucquenMk" component={XacthucquenMK1} />  
      </Stack.Navigator>
    </NavigationContainer>
     )

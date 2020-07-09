@@ -56,9 +56,9 @@ export default class RegisterAPI extends Component {
       if(hovaten!='' &&ngaysinh !='' &&sodt!=''  &&matkhau!='' &&nhaplaimk!='') {
         if(matkhau==nhaplaimk){// dang ki tai khoan len server
 this.props.navigation.navigate("xacthuc",{
-  phoneNumber:'pusu',
-  code:'123',
-  password:'hehe',
+  phoneNumber:'',
+  code:'',
+  password:'',
 });
 
 fetch(dangki, {

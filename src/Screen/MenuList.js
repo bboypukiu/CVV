@@ -83,7 +83,7 @@ class DanhSachDonNhan extends Component{
         return(   
                 <View style={{flex:7,alignItems:'center',justifyContent:'center',backgroundColor:'#eaeae1'}}>     
 
-<MenuListApi></MenuListApi>
+
                   {this.state.scrolltotop==true ? <TouchableHighlight
                   underlayColor='white'
                    style={{alignItems:'center',width:x1,height:40,backgroundColor:'white'}} onPress={()=>{this.toTop()}}>
@@ -259,7 +259,8 @@ export default class Danhsachdonnhan extends Component {
         super(props);
         this.state={
             a1:0,
-        };      
+        };  
+       // console.log('du lieu chuyen den',this.props)    
     }
 
    
@@ -268,6 +269,8 @@ export default class Danhsachdonnhan extends Component {
         return (
             
             <View style={{flex:1, backgroundColor:'#669999'}}>
+            <MenuListApi  {...this.props} />
+
                 <View 
                 style={{flex:2/10,
                     width:'100%',

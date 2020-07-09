@@ -4,27 +4,30 @@ import {View,  TouchableHighlight,TextInput,Image,Text,ScrollView,Dimensions,Fla
 import Icon from 'react-native-ionicons';
 import CardView from 'react-native-cardview';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import {macodedki} from '../../API/API.js';
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
  
-export default class MacodeDki extends Component{
+export default class MaQuenMK extends Component{
   constructor(props){
     super(props);
     this.state= {
       sodt: '',
-      matkhau:'',
-      smscode: '',
+     username:'',
+     newPassword:'',
+      macode: '',
+     
     }   
   }
   async macode(){
     // console.log('aa')
-    const xacthuc='http://222.252.26.108:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.password;
+    //const xacthuc='http://192.168.1.12:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.pass;
+ 
+ const xacthuc='http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone='+this.props.phone;
  console.log(xacthuc)
- const {sodt,matkhau,smscode}=this.state;
+ const {sodt,username,macode,newPassword}=this.state;
     //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
     
-      if(sodt!=''  &&matkhau!='' &&smscode!='') {
-        if(smscode==smscode){
+      if(sodt!=''  &&username!='' &&macode!='' &&newPassword!='') {
+        if(macode==macode){
      fetch(xacthuc, {
             method:'GET',
             headers:{
@@ -35,19 +38,20 @@ export default class MacodeDki extends Component{
       // this.props.natigation.navigate('register');
   }
       else {
-         alert('Mã code sai vui lòng nhập lại ');
+         alert('M? code sai vui l?ng nh?p l?i ');
   
 }  
-      }else{alert('Vui lòng nhập đúng mã code')};
+      }else{alert('Vui l?ng nh?p đúng m? code')};
 }
 
- render(){
+
+  render(){
   return(
     <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:300}}>
   <View>
-  <Text>
-      You receive a message, please enter the code here</Text>
-<Text>Bạn đã nhận được 1 mã code vui lòng nhập mã code vào đây</Text>
+  <Text style={{size:'20'}}>
+You receive a message, please enter the code here</Text>
+<Text>B?n đ? nh?n đư?c 1 m? code vui l?ng nh?p m? code vào đây</Text>
   </View>
     <OTPInputView
     style={{width: '80%', height: 100}}
@@ -85,5 +89,4 @@ export default class MacodeDki extends Component{
   )
 
 }}
-
 

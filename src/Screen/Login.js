@@ -19,6 +19,7 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
           sodt:'',
           password:'',
           isloading:false,
+          token:'',
         }
     }
 
@@ -26,19 +27,45 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
       {
         const taikhoan={
           sodt:this.state.sodt,
-          password:this.state.password
+          password:this.state.password,
+          //token: this.state.token,
         }
       //  console.log(taikhoan.sodt +" "+taikhoan.password);
         
         try {
           await AsyncStorage.setItem('statelogin3',JSON.stringify(taikhoan) );
+          console.log()
         } catch (error) {
           // Error saving data
         }
     }
-
+  
+   async luutoken(verificationToken)
+      {
+       // const token={
+        //ACCESS_TOKEN: this.state.token
+        //} 
+        try {
+          //console.log('tra ve ',verificationToken)
+          await AsyncStorage.setItem('ACCESS_TOKEN',verificationToken );
+        var token1 = await AsyncStorage.getItem('ACCESS_TOKEN');
+        // console.log('da luu token ', token1)
+        } catch (error) {
+          // Error saving data
+        }
+    }
+ /* 
+  async getluutoken(){
+    try{
+      var v= await AsyncStorage.getItem('ACCESS_TOKEN');
+      console.log(v);
+    }catch(error){
+      console.log(error)
+    }
+  }
+  */
    async login(){
-
+//localStorage.setItem('token',JSON.stringify(verificationToken));
     //console.log(this.state.sodt +" "+this.state.password);
       if(this.state.sodt=='' || this.state.password=='') alert('Vui lòng điền đẩy đủ thông tin');
       if(this.state.sodt!='' && this.state.password!=''){
@@ -64,16 +91,25 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
             .then((response) => response.json())
             .then((responseData) => {
               if(responseData.message =='login success'){
+                console.log('aaaa',responseData)
+                 this.ghifile();
+                 this.luutoken(responseData.data.verificationToken);
                 this.props.navigation.navigate('home') 
-              }  
+              } 
+          
                else{
               alert('Sai thông tin đăng nhập')
-            }            
+            } 
+                       
               console.log(responseData);
               
               if(responseData.message=='login fail'){
                 alert('Đăng nhập không thành công')               
               }
+               if (responseData.ACCESS_TOKEN) {
+                AsyncStorage.setItem("ACCESS_TOKEN", responseData.ACCESS_TOKEN);
+            }
+        
                 }).finally(() => {
                   this.setState({ isloading: false });
                 });
@@ -82,53 +118,6 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
             }
          }  
    }
-/*
-async quenmatkhau(){
-  if(this.state.sodt=='') alert('Vui lòng điền đẩy đủ thông tin');
-  if(this.state.sodt!=''){
-
-        this.setState({
-          isloading:true,
-        })
-        try {
-          await fetch(
-            quenmatkhau,
-            {
-              method: 'PUT',         
-              body: JSON.stringify({
-                username:this.state.sodt,
- 
-              }),
-              headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-               
-              },
-            },
-          )
-            .then((response) => response.json())
-            .then((responseData) => {
-              if(responseData.message =='login success'){
-                this.props.navigation.navigate('home') 
-              }  
-               else{
-              alert('Sai thông tin đăng nhập')
-            }            
-              console.log(responseData);
-              
-              if(responseData.message=='login fail'){
-                alert('Đăng nhập không thành công')               
-              }
-                }).finally(() => {
-                  this.setState({ isloading: false });
-                });
-            }catch (error) {
-              alert(error +'đăng nhập không thành công')
-            }
-         }  
-   }
-*/
-
-
     render(){
       return(
         
