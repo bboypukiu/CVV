@@ -76,7 +76,7 @@ laytoken(){
 async dsDon(){
       if (shipmentId!= '' ){
           if (shipmentId==shipmentId){
-           
+           // api nhận đơn từ server về
          await fetch('http://192.168.1.12:8889/api/app-shipper/shipment/findShipmentByShipperId?size=10&page=0',{
            method: 'GET',
            body:JSON.stringify({

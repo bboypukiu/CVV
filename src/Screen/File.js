@@ -1,14 +1,13 @@
 
-
-
-
 import React, { Component } from 'react';
-import { View,Text,Image,Button,TouchableHighlight ,AsyncStorage,Dimensions,TextInput,ScrollView,Linking} from 'react-native';
+import { View,Text,Image,Button,TouchableHighlight ,AsyncStorage,Dimensions,ScrollView,Linking} from 'react-native';
 import Icon from 'react-native-ionicons';
 import Information from './Information';
 import CardView from 'react-native-cardview';
+
 import {doimatkhau,capnhap} from '../../API/API.js';
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+import { TextInput } from 'react-native-gesture-handler';
 class Thongtin1 extends Component{
     constructor(props){
         super(props);
@@ -45,7 +44,7 @@ class CapnhatThongtin extends Component{
  
 }
 async capnhap(){
-
+console.log('11',capnhap)
     if(this.state.sodt == '' || this.state.tentk== '' || this.state.dateOfbirth=='') alert('Vui lòng nhập đúng thông tin ');
         if (this.state.sodt != '' && this.state.tentk != '' && this.state.dateOfbirth != '') {
             this.setState({
@@ -86,36 +85,26 @@ async capnhap(){
              
                     <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                        
                     <Text>Tên tài khoản</Text>
-                        <TextInput style={{width:x1/1.3,height:35,borderWidth:0.5,
-                        borderRadius:12,padding:10}}
-                     onChangText={(text)=>{
-                            this.setState({
-                                tentk:text,
-                            })
-                        }}
-                         placeholder='tên tài khoản' />                       
+                    <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
+                 placeholder='Tên Tài Khoản'
+                 keyboardType = 'text'
+                 onChangeText={(text)=>{this.setState({tentk:text})}}  />                       
                     </View>
 
                     <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                      
                     <Text>Số điện thoại</Text>
-                        <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
-                        onChangText={(text)=>{
-                            this.setState({
-                                sodt:text,
-                            })
-                        }}
-                         placeholder='số điện thoại' />                       
+                       <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
+                 placeholder='Số điện thoại'
+                 keyboardType = 'numeric'
+                 onChangeText={(text)=>{this.setState({sodt:text})}}  />                   
                     </View>
 
                     <View style={{flexDirection:'column',justifyContent:'center',marginRight:10,marginBottom:10}}>                        
                     <Text>Ngày sinh</Text>
-                        <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
-                         onChangText={(text)=>{
-                            this.setState({
-                               dateOfbirth:text,
-                            })
-                        }}
-                         placeholder='Ngày sinh' />                       
+                    <TextInput style={{width:x1/1.3,height:35,padding:10,borderWidth:0.5,borderRadius:12}}
+                 placeholder='ngay sinh'
+                 keyboardType = 'numeric'
+                 onChangeText={(text)=>{this.setState({dateOfbirth:text})}}  />                      
                     </View>
                     <TouchableHighlight  onPress={()=>{this.capnhap()}}
               //onPress={()=>{this.capnhap()}}
@@ -142,13 +131,16 @@ class BaoMat extends Component{ // đổi mật khẩu
         };      
 
     }
-
+laytoken(){
+    AsyncStorage.removeItem('ACCESS_TOKEN')
+}
     async baomat(){
        console.log(this.state.oldPassword+''+this.state.newPassword)
-        //if(this.state.oldPassword==''|| this.state.newPassword=='') alert('Vui lòng nhập đúng mật khẩu');
+       // if(this.state.oldPassword==''|| this.state.newPassword=='') alert('Vui lòng nhập đúng mật khẩu');
         
         if(this.state.oldPassword!=''&& this.state.newPassword!=''){
             if(newPassword==newPassword){// đổi mật khẩu
+            console.log('1111',newPassword)
             this.setState({
                 isloading:true,
         })
@@ -163,19 +155,16 @@ class BaoMat extends Component{ // đổi mật khẩu
             }),
             headers:{
                 'Content-Type':'application',
-                'ACCESS_TOKEN':'Bearer'+ token
+                'ACCESS_TOKEN':'Bearer'+ this.props.parent.laytoken()
             },
         },
     )
     .then(response =>{
-
-
         return response.json();
-    }) 
-        
-      } /*else{
+    })       
+      } else{
           alert('Mật khẩu không trùng khớp')
-          }*/
+          }
         }else{
             alert('Vui lòng nhập đủ thông tin')
         } }
@@ -186,45 +175,35 @@ class BaoMat extends Component{ // đổi mật khẩu
                <View style={{flexDirection:'row',width:220,height:35,borderWidth:0.5,marginBottom:20,
                         borderRadius:5,padding:10,alignItems:'center',justifyContent:'center'}}>
                    <Icon name='key-sharp' size={20} color='#006699'/>
-                   <TextInput style={{width:200,height:35}}
-                      onChangText={(text)=>{
-                            this.setState({
-                                oldPassword:text,
-                            })
-                        }}
-                    placeholder='Nhập mật khẩu cũ'/>
+                     <TextInput style={{width:200,height:35}}
+                 placeholder='Nhập Mật Khẩu Cũ'
+                 keyboardType = 'numeric'
+                 onChangeText={(text)=>{this.setState({oldPassword:text})}}  />       
                </View>
 
                <View style={{flexDirection:'row',width:220,height:35,borderWidth:0.5,marginBottom:20,
                         borderRadius:5,padding:10,alignItems:'center',justifyContent:'center'}}>
                    <Icon name='lock-closed-sharp' size={20} color='#006600'/>
-                   <TextInput
-                   secureTextEntry={true} style={{width:200,height:35}}
-                    onChangText={(text)=>{
-                            this.setState({
-                                newPassword:text,
-                            })
-                        }}
-                    placeholder='Nhập mật khẩu mới'/>
+                    <TextInput style={{width:200,height:35}}
+                 placeholder='Nhập Mật Khẩu Mới'
+                 keyboardType = 'numeric'
+                 onChangeText={(text)=>{this.setState({newPassword:text})}}  /> 
                </View>
 
                <View style={{flexDirection:'row',width:220,height:35,borderWidth:0.5,marginBottom:20,
                         borderRadius:5,padding:10,alignItems:'center',justifyContent:'center'}}>
                    <Icon name='lock-closed-sharp' size={20} color='#006600'/>
-                   <TextInput
-                   secureTextEntry={true} style={{width:200,height:35}}
-                     onChangText={(text)=>{
-                            this.setState({
-                                newPassword:text,
-                            })
-                        }}
-                    placeholder='Nhập lại mật khẩu mới'/>
+                    <TextInput style={{width:200,height:35}}
+                 placeholder='Nhập Mật Khẩu Mới'
+                 keyboardType = 'numeric'
+                 onChangeText={(text)=>{this.setState({newPassword:text})}}  />
                </View>
                
-               <Button title='Cập nhật' color='#006699'
-               onPress={()=>{this.baomat()}} 
-               
-                />
+                     <TouchableHighlight  onPress={()=>{this.baomat()}}
+              //onPress={()=>{this.capnhap()}}
+              style={{width:200,borderRadius:10,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
+                <Text style={{color:'white'}} >Cập nhập</Text>
+              </TouchableHighlight>
             
 
             </View>

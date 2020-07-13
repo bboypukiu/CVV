@@ -87,10 +87,23 @@ export default class ChitietDon extends Component {
                             </View>
                         </View> :<View></View>}
 
-           {/* <TrangthaiApi /> */}
+                        <View style={{flex:4/10,width:x1-10,borderWidth:0.5,padding:5,borderRadius:10,
+                            backgroundColor:'white',margin:5,flexDirection:'column'}}>
+                            <Text style={{margin:5,marginBottom:20,fontWeight:'bold',color:'#339966'}}>Nội đung đơn hàng</Text>
+                            <Text>
+                            </Text>
+                        </View>
+
+
+                     {this.props.nhan!='ok' ?   <View style={{alignItems:'center',}}>
+                        <TouchableHighlight style={{justifyContent:'center',alignItems:'center',width:100,height:35,backgroundColor:'#339966',marginTop:50}} >
+                           <Text style={{color:'white'}}>Đã nhận đơn</Text>
+                        </TouchableHighlight>
+                        </View>:<View></View>}
                         </ScrollView>
                     </View>
                 </ScrollView>
+            
             
         );
     }

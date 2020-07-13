@@ -3,7 +3,7 @@ import {View,Image,Text,ScrollView,Dimensions,FlatList,ActivityIndicator, Animat
 import Icon from 'react-native-ionicons';
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
 /// Thông tin shipper
-
+import { TextInput } from 'react-native-gesture-handler';
 export default class Information extends Component {
   // const [isLoading, setLoading] = useState(true);
   // const [data, setData] = useState([]);

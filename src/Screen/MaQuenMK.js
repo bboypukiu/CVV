@@ -21,14 +21,14 @@ export default class MaQuenMK extends Component{
     // console.log('aa')
     //const xacthuc='http://192.168.1.12:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.pass;
  
- const xacthucquenmk='http://222.252.26.108:8889/user-m-service//shipper/reset-password';
- console.log(xacthucquenmk)
+ const xacthucquenMk='http://222.252.26.108:8889/user-m-service//shipper/reset-password';
+ console.log('111111',xacthucquenMk)
  const {sodt,username,macode,newPassword}=this.state;
     //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
     
       if(sodt!=''  &&username!='' &&macode!='' &&newPassword!='') {
         if(macode==macode){
-     fetch(xacthucquenmk, {
+     fetch(xacthucquenMk, {
             method:'PUT',
             headers:{
                 'Content-Type': 'application/json; charset=UTF-8',

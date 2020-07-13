@@ -26,8 +26,8 @@ constructor(props){
       }}
 
   guitinnhan(){
-      console.log('aa')
- const {sodt}=this.state;
+      console.log('guitinnhan')
+      const {sodt}=this.state;
     //console.log(this.state.hovaten+" "+this.state.sodt +" "+ this.state.ngaysinh  +" "+this.state.matkhau);
       if(sodt!='' ) {
         if(sodt==sodt){// dang ki tai khoan len server
@@ -37,7 +37,7 @@ this.props.navigation.navigate("xacthucquenMk",{
   newPassword:'',
 });
 
-fetch('http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone=' this.props.sodt, {
+fetch('http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone=', {
   method: 'PUT',
   headers: {
      'Content-Type': 'application/json',

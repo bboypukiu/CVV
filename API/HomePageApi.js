@@ -31,7 +31,8 @@ async nhandon(){
      //const { shipmentId }= this.state;
         if (shipmentId!= '' ){
           if (shipmentId==shipmentId){
-           
+            
+           // api truyền đơn lên server
            await fetch('http://222.252.26.108:8889/api/app-shipper/order/updateShipper?shipmentId='+shipmentId,{
  
               method:'POST',
@@ -91,6 +92,7 @@ async nhandon(){
                   onPress={()=>{
                     this.nhandon()
                     alert(this.nhandon())
+                   
                     //this.props.navigation.navigate('luu',
                  {/*  {shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa,
                     huyen: this.props.huyen, tinh: this.props.tinh,
