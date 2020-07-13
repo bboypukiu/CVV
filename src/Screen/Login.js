@@ -106,10 +106,7 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
               if(responseData.message=='login fail'){
                 alert('Đăng nhập không thành công')               
               }
-               if (responseData.ACCESS_TOKEN) {
-                AsyncStorage.setItem("ACCESS_TOKEN", responseData.ACCESS_TOKEN);
-            }
-        
+            
                 }).finally(() => {
                   this.setState({ isloading: false });
                 });

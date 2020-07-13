@@ -56,7 +56,7 @@ import {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  function ChitietDonhang({navigation}) {
+  function ChitietDonhang({route, navigation}) {
     return (
          <ChitietDon navigation={navigation} />
     );

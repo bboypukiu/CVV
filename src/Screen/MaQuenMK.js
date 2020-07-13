@@ -21,15 +21,15 @@ export default class MaQuenMK extends Component{
     // console.log('aa')
     //const xacthuc='http://192.168.1.12:8889/user-m-service/shipper/verification-user?phoneNumber='+this.props.phoneNumbe+'&code='+this.props.code+'&password='+this.props.pass;
  
- const xacthuc='http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone='+this.props.phone;
- console.log(xacthuc)
+ const xacthucquenmk='http://222.252.26.108:8889/user-m-service//shipper/reset-password';
+ console.log(xacthucquenmk)
  const {sodt,username,macode,newPassword}=this.state;
     //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
     
       if(sodt!=''  &&username!='' &&macode!='' &&newPassword!='') {
         if(macode==macode){
-     fetch(xacthuc, {
-            method:'GET',
+     fetch(xacthucquenmk, {
+            method:'PUT',
             headers:{
                 'Content-Type': 'application/json; charset=UTF-8',
 },
@@ -38,10 +38,10 @@ export default class MaQuenMK extends Component{
       // this.props.natigation.navigate('register');
   }
       else {
-         alert('M? code sai vui l?ng nh?p l?i ');
+         alert('Mã code sai vui lòng nhập lại ');
   
 }  
-      }else{alert('Vui l?ng nh?p đúng m? code')};
+      }else{alert('Vui lòng nhập đúng mã code')};
 }
 
 
@@ -51,7 +51,7 @@ export default class MaQuenMK extends Component{
   <View>
   <Text style={{size:'20'}}>
 You receive a message, please enter the code here</Text>
-<Text>B?n đ? nh?n đư?c 1 m? code vui l?ng nh?p m? code vào đây</Text>
+<Text>Bạn đã nhận được 1 mã code vui lòng nhập mã code vào đây</Text>
   </View>
     <OTPInputView
     style={{width: '80%', height: 100}}

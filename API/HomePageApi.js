@@ -12,9 +12,50 @@ class ItemDonhang extends Component{
     constructor(props){
         super(props);
         this.state={
+          shipmentId:'',
+          data:[],
         }
     } 
-     
+
+laytoken(){
+  console.log('lấy token', token1);
+  AsyncStorage.removeItem('ACCESS_TOKEN', token1)
+}
+
+ componentDidMount(){
+    this.nhandon();
+    
+  }     
+async nhandon(){
+
+     //const { shipmentId }= this.state;
+        if (shipmentId!= '' ){
+          if (shipmentId==shipmentId){
+           
+           await fetch('http://222.252.26.108:8889/api/app-shipper/order/updateShipper?shipmentId='+shipmentId,{
+ 
+              method:'POST',
+              body: JSON.stringify({
+                  shipmentId: this.props.shipmentId ,
+                   ten: this.props.shippingFromName ,
+                   diachi: this.props.shippingFromStreet ,
+                   xa: this.props.shippingFromWard ,
+                   huyen: this.props.shippingFromDistrict ,
+                   tinh:this.props.shippingFromProvince ,
+                   sdtshop:this.props.shippingFromPhone ,
+
+              }),
+              headers:{
+                'Content-Type': 'application/json',
+                  'ACCESS_TOKEN': 'Bearer ' + this.props.parent.laytoken()
+              },
+
+            },
+            ).then(response => { return response.json(); })
+          }
+       
+}
+}
     render(){
     return(
     
@@ -48,14 +89,15 @@ class ItemDonhang extends Component{
                </TouchableHighlight>
                <TouchableHighlight underlayColor='#f0f5f5'
                   onPress={()=>{
-                    //alert(this.props.donnhan)
-                    this.props.navigation.navigate('luu', 
-                   {shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa, huyen: this.props.huyen, tinh: this.props.tinh,
-                   sdtshop:this.props.sdtshop
-                   
-                   })
-                    
-                    }}>
+                    this.nhandon()
+                    alert(this.nhandon())
+                    //this.props.navigation.navigate('luu',
+                 {/*  {shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa,
+                    huyen: this.props.huyen, tinh: this.props.tinh,
+                   sdtshop:this.props.sdtshop, tennguoinhan: this.props.tennguoinhan,
+                    sdtnguoinhan: this.props.sdtnguoinhan, orderId: this.props.orderId,  diachinhan: this.props.diachinhan } */}
+                    //) 
+                     }}>
                <View style={{flexDirection:'row'}}>
                    <Icon name='bookmark-outline' color='#006699' size={23}/>
                    <Text style={{marginLeft:3}}>Nhận đơn</Text>
@@ -81,12 +123,13 @@ export default class HomePageAPI extends Component {
     this.state={
       isLoading:false,
       data:[],
-      refreshControl: false,
+      refreshing: false,
     }
   }
 
  componentDidMount(){
     this.loaddt();
+    
   }
 
   loaddt() {
@@ -96,6 +139,7 @@ export default class HomePageAPI extends Component {
        .then((json) => {
      
        this.setState({ 
+         refreshing: true,
          isLoading:false,
          data:json.data,
            //this.setState({refreshing: true});
@@ -105,6 +149,7 @@ export default class HomePageAPI extends Component {
       .catch((error) => {
         console.error(error)
         alert('tải dữ liệu bị lỗi');
+        thi.setState({refreshing: false});
       })
       .finally(() => this.setState({
         isLoading:false,
@@ -137,21 +182,40 @@ export default class HomePageAPI extends Component {
                  renderItem={({ item,index }) => {
                   // console.log('111',item)
                  return( <ItemDonhang 
+                 //shop
                   ten={item.shippingFromName} 
                   diachi={item.shippingFromStreet} 
                   xa={item.shippingFromWard} 
                    huyen={item.shippingFromDistrict} 
                    tinh={item.shippingFromProvince} 
                  sdtshop={item.shippingFromPhone} 
-                 diachinhan={item.shippingToAddress}
+                // ng nhận 
                  navigation={this.props.navigation} 
-                 donnhan={item?.shipmentId}
+                 donnhan={item.shipmentId}
+                 diachinhan={item.shippingToAddress}
+                 tennguoinhan={item.shippingToName}
+                 sdtnguoinhan={item.shippingToPhone}
+                // trạng thái
+               
+                clientId={item.clientId}
+                orgId={item.orgId}
+                orderId={item.orderId}
+                userId={item.userId}
+                orderNo={item.orderNo}
+                statusId={item.statusId}
+                status= {item.status}
+                reason ={item.reason}
+                packageWeight ={item.packageWeight}
+                fee ={item.fee}
+                cod ={item.col}
+               pickMoney={item.pickMoney}
+
                  />
             
                  );
                 
                  }
-      // <Itempu navigation={navigation} />
+     
          
           }/>
                   
@@ -173,7 +237,6 @@ export default class HomePageAPI extends Component {
                     </View>
            </View>
 
-  
   
     
   );

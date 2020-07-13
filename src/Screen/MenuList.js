@@ -82,7 +82,7 @@ class DanhSachDonNhan extends Component{
     render(){
         return(   
                 <View style={{flex:7,alignItems:'center',justifyContent:'center',backgroundColor:'#eaeae1'}}>     
-
+        
 
                   {this.state.scrolltotop==true ? <TouchableHighlight
                   underlayColor='white'
@@ -123,6 +123,7 @@ class DanhSachDonNhan extends Component{
                       renderItem={({item,index})=>{
                         return(<ItemDonhang item={item} parent={this.props.parent.state.a1} />);
                     }}
+                    
                     / >   
                                     
            </View>
@@ -136,8 +137,7 @@ class ThongTinLichsu extends Component{
         this.state={
             loaddata:'false',
             dsdonhangnhan:[]
-        }   
-    
+        }    
 
     }
 
@@ -269,9 +269,7 @@ export default class Danhsachdonnhan extends Component {
         return (
             
             <View style={{flex:1, backgroundColor:'#669999'}}>
-            <MenuListApi  {...this.props} />
-
-                <View 
+     <View 
                 style={{flex:2/10,
                     width:'100%',
                     justifyContent:'flex-start',
@@ -279,19 +277,21 @@ export default class Danhsachdonnhan extends Component {
                     backgroundColor:'#669999'
                 }}>
                     <Top ref='top' parent={this} />
+                    
                 </View>
 
-                <View 
+                <View  
                 style={{flex:7.9/10,
                     width:'100%',
                    backgroundColor:'white',
                                                         
                 }}>
-                           
+                   <MenuListApi  {...this.props} />  
                   {this.state.a1==0 ? <DanhSachDonNhan parent={this} navigation={this.props.navigation}/> :
                   <View style={{flex:1}}>{this.state.a1==1? <ThongTinLichsu/>:<BaoMat/>}</View>}
                   
                 </View>
+                
             </View>
         );
     }

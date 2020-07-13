@@ -23,12 +23,19 @@ import Xacthuc from './src/Screen/Macodedki';
 import XacthucCN from './src/Screen/SmsCodeCN';
 import XacthucquenMK from './src/Screen/MaQuenMK';
 import MenuListApi from './API/MenuListApi';
-
+import ChitietdonApi from './API/ChitietdonApi';
 console.disableYellowBox = true;
 function MenuListApi1({navigation}){ //nhập đơn
 const {shipmentId }= route.params;
   return(
     <MenuListApi navigation={navigation} shipmentId={shipmentId}/>
+  );
+}
+
+function ChitietdonApi1({navigation}){ //chi tiết đơn
+const {orderId }= route.params;
+  return(
+    <ChitietdonApi navigation={navigation} orderId={orderId}/>
   );
 }
 
