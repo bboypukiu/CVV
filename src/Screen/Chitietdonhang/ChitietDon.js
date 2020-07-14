@@ -8,7 +8,6 @@ let data = null;
 export default class ChitietDon extends Component {
     constructor(props){
         super(props);
-
     }
     componentDidMount(){
         data = this.props.navigation.getParam('itemsend');
@@ -17,6 +16,8 @@ export default class ChitietDon extends Component {
     chiduong(latitude,longitude){
         this.props.navigation.navigate('map',{latitude:latitude,longitude:longitude});
     }
+
+    
     render() {
         return (
          
