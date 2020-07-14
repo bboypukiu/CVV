@@ -263,6 +263,11 @@ export default class Danhsachdonnhan extends Component {
        // console.log('du lieu chuyen den',this.props)    
     }
 
+naviScreen = (item) => {
+   this.props.navigation.navigate('Chitietdon',{
+       itemsend:item
+   });
+} 
    
     render() {
        
@@ -286,7 +291,7 @@ export default class Danhsachdonnhan extends Component {
                    backgroundColor:'white',
                                                         
                 }}>
-                   <MenuListApi  {...this.props} />  
+                   <MenuListApi onNavi={this.naviScreen} />  
                   {this.state.a1==0 ? <DanhSachDonNhan parent={this} navigation={this.props.navigation}/> :
                   <View style={{flex:1}}>{this.state.a1==1? <ThongTinLichsu/>:<BaoMat/>}</View>}
                   

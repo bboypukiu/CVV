@@ -1,6 +1,6 @@
 
 import React, { Component,useEffect, useState} from 'react';
-import {View,Image,RefreshControl,TouchableHighlight,Text,ScrollView,Dimensions,FlatList,
+import {View,Image,RefreshControl,TouchableHighlight,Text,ScrollView,Dimensions,FlatList,AsyncStorage,
 ActivityIndicator, Animated,Linking, Alert} from 'react-native';
 import Icon from 'react-native-ionicons';
 
@@ -14,50 +14,73 @@ class ItemDonhang extends Component{
         this.state={
           shipmentId:'',
           data:[],
+          
         }
     } 
-
-laytoken(){
-  console.log('lấy token', token1);
-  AsyncStorage.removeItem('ACCESS_TOKEN', token1)
-}
-
- componentDidMount(){
-    this.nhandon();
     
-  }     
-async nhandon(){
-
-     //const { shipmentId }= this.state;
-        if (shipmentId!= '' ){
-          if (shipmentId==shipmentId){
-            
-           // api truyền đơn lên server
-           await fetch('http://222.252.26.108:8889/api/app-shipper/order/updateShipper?shipmentId='+shipmentId,{
+async laytoken() {
+   var a='';
+  try {
+     a= await AsyncStorage.getItem('ACCESS_TOKEN');
+ return a;
+      // We have data!!
+      console.log('Laytoken', a);
+    
+  } catch (error) {
+      console.log("sai");
+    // Error retrieving data
+  }
  
-              method:'POST',
-              body: JSON.stringify({
-                  shipmentId: this.props.shipmentId ,
-                   ten: this.props.shippingFromName ,
-                   diachi: this.props.shippingFromStreet ,
-                   xa: this.props.shippingFromWard ,
-                   huyen: this.props.shippingFromDistrict ,
-                   tinh:this.props.shippingFromProvince ,
-                   sdtshop:this.props.shippingFromPhone ,
+}
 
-              }),
-              headers:{
-                'Content-Type': 'application/json',
-                  'ACCESS_TOKEN': 'Bearer ' + this.props.parent.laytoken()
-              },
+nhandon = async () =>{
 
-            },
-            ).then(response => { return response.json(); })
-          }
-       
+ var a= await AsyncStorage.getItem('ACCESS_TOKEN');
+   console.log(a+" 111");
+  const { donnhan }= this.props;
+  if (donnhan!= '' ){
+    console.log('cai id nay', donnhan)
+      // api truyền đơn lên server
+   var response = await fetch('http://222.252.26.108:8889/api/app-shipper/order/updateShipper?shipmentId='+ donnhan,{
+
+        method:'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'ACCESS_TOKEN': 'Bearer ' + await this.laytoken()
+        },
+      },
+    ).then(response => response.json())
+    .then((json) => json)
+    .catch((error) => {
+      console.error(error)
+      Alert.alert('Lỗi kết nối! Vui lòng thử lại')
+      return null
+    })
+  
+    const {status, statusCode, httpStatus, data} = response
+    if(status == "SUCCESS" && httpStatus == "CREATED" && statusCode == 201){
+      if(this.props.reloadPage){
+        this.props.reloadPage()
+      }
+      this.props.navigation.navigate('luu',
+      //{
+        //shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa,
+        //huyen: this.props.huyen, tinh: this.props.tinh,
+        //sdtshop:this.props.sdtshop, tennguoinhan: this.props.tennguoinhan,
+        //sdtnguoinhan: this.props.sdtnguoinhan, orderId: this.props.orderId,  
+        //diachinhan: this.props.diachinhan }
+      ) 
+    }else{
+      Alert.alert('Không nhận được đơn này, vui lòng thử lại!')
+   } 
 }
 }
-    render(){
+  //  console.log('ket qua', JSON.stringify(response))
+
+
+
+
+render(){
     return(
     
         <View style={{borderRadius:10,backgroundColor:'white',marginTop:12,padding:10,
@@ -89,24 +112,15 @@ async nhandon(){
                </View>
                </TouchableHighlight>
                <TouchableHighlight underlayColor='#f0f5f5'
-                  onPress={()=>{
-                    this.nhandon()
-                    alert(this.nhandon())
-                   
-                    //this.props.navigation.navigate('luu',
-                 {/*  {shipmentId: this.props.donnhan, ten: this.props.ten, xa:this.props.xa,
-                    huyen: this.props.huyen, tinh: this.props.tinh,
-                   sdtshop:this.props.sdtshop, tennguoinhan: this.props.tennguoinhan,
-                    sdtnguoinhan: this.props.sdtnguoinhan, orderId: this.props.orderId,  diachinhan: this.props.diachinhan } */}
-                    //) 
-                     }}>
+                  onPress={this.nhandon}>       
                <View style={{flexDirection:'row'}}>
                    <Icon name='bookmark-outline' color='#006699' size={23}/>
                    <Text style={{marginLeft:3}}>Nhận đơn</Text>
                </View></TouchableHighlight>
             </View>
         </View>
-    );}
+    );
+  }
 }
  class TrangChu extends Component {
  
@@ -126,6 +140,7 @@ export default class HomePageAPI extends Component {
       isLoading:false,
       data:[],
       refreshing: false,
+      isRefreshing: false
     }
   }
 
@@ -134,12 +149,12 @@ export default class HomePageAPI extends Component {
     
   }
 
-  loaddt() {
+  loaddt = () => {
       
     fetch('http://222.252.26.108:8889/api/app-shipper/shipment/findShipmentNonShip') 
       .then((response) => response.json()) 
        .then((json) => {
-     
+         console.log(json)
        this.setState({ 
          refreshing: true,
          isLoading:false,
@@ -169,57 +184,65 @@ export default class HomePageAPI extends Component {
         console.log("dang tai dl");
         
     }
-    onRefresh() {// tai du lieu 
-        this.setState({ loaddt: false, });
-        alert('dang tai du lieu');
-      }
-  render(){
- 
-  
+
+onRefresh = () => {// tai du lieu
+  this.setState({
+    isRefreshing: true
+  })
+  setTimeout(()=>{
+      this.setState({ isRefreshing: false, });
+  }, 1000)
+}
+
+render(){ 
   return (
-
-  <View >
-                <FlatList style={{flex:1/10,width:x1-6}}
-                 data={this.state.data} 
-                 renderItem={({ item,index }) => {
-                  // console.log('111',item)
-                 return( <ItemDonhang 
-                 //shop
-                  ten={item.shippingFromName} 
-                  diachi={item.shippingFromStreet} 
-                  xa={item.shippingFromWard} 
-                   huyen={item.shippingFromDistrict} 
-                   tinh={item.shippingFromProvince} 
-                 sdtshop={item.shippingFromPhone} 
-                // ng nhận 
-                 navigation={this.props.navigation} 
-                 donnhan={item.shipmentId}
-                 diachinhan={item.shippingToAddress}
-                 tennguoinhan={item.shippingToName}
-                 sdtnguoinhan={item.shippingToPhone}
-                // trạng thái
-               
-                clientId={item.clientId}
-                orgId={item.orgId}
-                orderId={item.orderId}
-                userId={item.userId}
-                orderNo={item.orderNo}
-                statusId={item.statusId}
-                status= {item.status}
-                reason ={item.reason}
-                packageWeight ={item.packageWeight}
-                fee ={item.fee}
-                cod ={item.col}
-               pickMoney={item.pickMoney}
-
-                 />
-            
-                 );
-                
-                 }
-     
-         
-          }/>
+    <View >
+            <FlatList style={{flex:1/10,width:x1-6}}
+              data={this.state.data} 
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.isRefreshing}
+                  onRefresh={this.onRefresh}
+                />
+              }
+              renderItem={({ item,index }) => {
+                // console.log('111',item)
+              return( 
+                  <ItemDonhang 
+                    //shop
+                    ten={item.shippingFromName} 
+                    diachi={item.shippingFromStreet} 
+                    xa={item.shippingFromWard} 
+                    huyen={item.shippingFromDistrict} 
+                    tinh={item.shippingFromProvince} 
+                    sdtshop={item.shippingFromPhone} 
+                    // ng nhận 
+                    navigation={this.props.navigation} 
+                    donnhan={item.shipmentId}
+                    diachinhan={item.shippingToAddress}
+                    tennguoinhan={item.shippingToName}
+                    sdtnguoinhan={item.shippingToPhone}
+                    // trạng thái
+                  
+                    clientId={item.clientId}
+                    orgId={item.orgId}
+                    orderId={item.orderId}
+                    userId={item.userId}
+                    orderNo={item.orderNo}
+                    statusId={item.statusId}
+                    status= {item.status}
+                    reason ={item.reason}
+                    packageWeight ={item.packageWeight}
+                    fee ={item.fee}
+                    cod ={item.col}
+                    pickMoney={item.pickMoney}
+                    reloadPage = {this.loaddt}    
+                />
+              );
+            }
+  
+      
+      }/>
                   
               
 

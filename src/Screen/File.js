@@ -131,21 +131,33 @@ class BaoMat extends Component{ // đổi mật khẩu
         };      
 
     }
-laytoken(){
-    AsyncStorage.removeItem('ACCESS_TOKEN')
+    
+ laytoken = async ()=> {
+   var a='';
+  try {
+     a= await AsyncStorage.getItem('ACCESS_TOKEN');
+ return a;
+      // We have data!!
+      console.log('Laytoken', a);
+    
+  } catch (error) {
+      console.log("sai");
+    // Error retrieving data
+  }
+ 
 }
-    async baomat(){
-       console.log(this.state.oldPassword+''+this.state.newPassword)
+     baomat= async() =>{
+         console.log ('a1')
+        const {oldPassword, newPassword} = this.state; 
+  var a = await AsyncStorage.getItem('ACCESS_TOKEN');
+   console.log(a+ 'baomat')
+      // console.log(this.state.oldPassword+''+this.state.newPassword)
        // if(this.state.oldPassword==''|| this.state.newPassword=='') alert('Vui lòng nhập đúng mật khẩu');
         
         if(this.state.oldPassword!=''&& this.state.newPassword!=''){
-            if(newPassword==newPassword){// đổi mật khẩu
+           // đổi mật khẩu
             console.log('1111',newPassword)
-            this.setState({
-                isloading:true,
-        })
- 
-          await fetch(
+        var response =  await fetch(
         doimatkhau,
         {
             method:'PUT',
@@ -155,16 +167,17 @@ laytoken(){
             }),
             headers:{
                 'Content-Type':'application',
-                'ACCESS_TOKEN':'Bearer'+ this.props.parent.laytoken()
+                'ACCESS_TOKEN':'Bearer '+ await this.laytoken()
             },
         },
-    )
-    .then(response =>{
-        return response.json();
+    ).then((response) => response.json())
+    .then((json) => json)
+    .catch((error)=>{
+        console.error(error)
+    alert ('cập nhập bị lỗi')
+        return null
     })       
-      } else{
-          alert('Mật khẩu không trùng khớp')
-          }
+      
         }else{
             alert('Vui lòng nhập đủ thông tin')
         } }
@@ -200,11 +213,18 @@ laytoken(){
                </View>
                
                      <TouchableHighlight  onPress={()=>{this.baomat()}}
-              //onPress={()=>{this.capnhap()}}
+              onPress={this.baomat}
               style={{width:200,borderRadius:10,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
                 <Text style={{color:'white'}} >Cập nhập</Text>
               </TouchableHighlight>
             
+         
+      {this.state.isLoading ? <ActivityIndicator/> : (
+       <Text>    
+           </Text>// item. ltinh tron
+
+      )}
+
 
             </View>
         );

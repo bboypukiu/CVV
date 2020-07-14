@@ -49,10 +49,10 @@ export default class RegisterAPI extends Component {
 
 
 
-  register(){
+  register= async ()=>{
       console.log('aa')
  const {hovaten,sodt,ngaysinh,matkhau,nhaplaimk}=this.state;
-    console.log(this.state.hovaten+" "+this.state.sodt +" "+ this.state.ngaysinh  +" "+this.state.matkhau);
+   // console.log(this.state.hovaten+" "+this.state.sodt +" "+ this.state.ngaysinh  +" "+this.state.matkhau);
       if(hovaten!='' &&ngaysinh !='' &&sodt!=''  &&matkhau!='' &&nhaplaimk!='') {
         if(matkhau==nhaplaimk){// dang ki tai khoan len server
 this.props.navigation.navigate("xacthuc",{
@@ -61,7 +61,7 @@ this.props.navigation.navigate("xacthuc",{
   password:'',
 });
 
-fetch(dangki, {
+await fetch(dangki, {
   method: 'POST',
   headers: {
      'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ fetch(dangki, {
         
         <View style={{flex:3,marginTop:5,justifyContent:'center',alignItems:'center'}}>
            <TouchableHighlight 
-           onPress={()=>{this.register()} }
+           onPress={this.register }
            style={{width:200,borderRadius:10,height:35,marginTop:10,backgroundColor:'#009933',justifyContent:'center',alignItems:'center'}} >
              <Text style={{color:'white'}} >Đăng kí</Text>
            </TouchableHighlight>

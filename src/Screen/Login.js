@@ -47,7 +47,7 @@ import {login,dangki,quenmatkhau} from '../../API/API.js';
         //} 
         try {
           //console.log('tra ve ',verificationToken)
-          await AsyncStorage.setItem('ACCESS_TOKEN',verificationToken );
+          await AsyncStorage.setItem('  ',verificationToken );
         var token1 = await AsyncStorage.getItem('ACCESS_TOKEN');
         // console.log('da luu token ', token1)
         } catch (error) {

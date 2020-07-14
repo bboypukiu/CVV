@@ -4,16 +4,18 @@ import Icon from 'react-native-ionicons';
 import TrangthaiApi from '../../../API/TrangthaiApi';
 import ChitietdonApi from '../../../API/ChitietdonApi';
 let x1=Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+let data = null;
 export default class ChitietDon extends Component {
     constructor(props){
         super(props);
 
     }
-    
+    componentDidMount(){
+        data = this.props.navigation.getParam('itemsend');
+        alert('ahihi')
+   } 
     chiduong(latitude,longitude){
         this.props.navigation.navigate('map',{latitude:latitude,longitude:longitude});
-    
-        
     }
     render() {
         return (

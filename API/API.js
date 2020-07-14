@@ -1,6 +1,6 @@
 export const host = 'http://222.252.26.108:8889/api';
 export const login ='http://222.252.26.108:8889/user-m-service/shipper/login';
-export const dangki =  ' http://222.252.26.108:8889/user-m-service/shipper/register';
+export const dangki = 'http://222.252.26.108:8889/user-m-service/shipper/register';
 //export const danhsachdonhang = host + '/app-shipper/order/detail?orderId=831';
 export const doimatkhau ='http://222.252.26.108:8889/user-m-service/user/change-password';
 //export const datlaimatkhau ='http://222.252.26.108:8889/user-m-service/shipper/reset-password';

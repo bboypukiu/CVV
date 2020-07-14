@@ -25,7 +25,7 @@ constructor(props){
       sodt:'',   
       }}
 
-  guitinnhan(){
+  guitinnhan = async () => {
       console.log('guitinnhan')
       const {sodt}=this.state;
     //console.log(this.state.hovaten+" "+this.state.sodt +" "+ this.state.ngaysinh  +" "+this.state.matkhau);
@@ -37,7 +37,7 @@ this.props.navigation.navigate("xacthucquenMk",{
   newPassword:'',
 });
 
-fetch('http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone=', {
+ await fetch('http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone=', {
   method: 'PUT',
   headers: {
      'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ fetch('http://222.252.26.108:8889/user-m-service/shipper/reset-password?phone=',
 
        <View style={{flex:3,justifyContent:'flex-start',alignItems:'center',marginTop:8,marginRight: 5}}>
               <TouchableHighlight 
-               onPress={()=>{this.guitinnhan()}}
+               onPress={this.guitinnhan}
               style={{width:200,borderRadius:20,height:35,backgroundColor:'#1aa3ff',justifyContent:'center',alignItems:'center'}} >
                 <Text style={{color:'white'}}>Gửi Tin Nhắn</Text>
               </TouchableHighlight>
