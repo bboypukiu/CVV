@@ -66,7 +66,7 @@ _ItemDonhang = ({item,index}) => {
     return( 
         <TouchableOpacity
           onPress={ () => {this.props.onNavi(item)}}
-         style={{borderRadius:10,backgroundColor:'red',marginTop:12,padding:10,height:500,
+         style={{borderRadius:10,backgroundColor:'red',marginTop:12,padding:10,height:100,
         width:500,
         borderBottomWidth:0.4, }}>
         
