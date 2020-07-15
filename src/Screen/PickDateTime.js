@@ -13,7 +13,7 @@ export const App = () => {
     setDate(currentDate);
   };
 
-  const showMode = currentMode => {
+  const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
