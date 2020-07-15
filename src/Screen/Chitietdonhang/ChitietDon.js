@@ -11,7 +11,7 @@ export default class ChitietDon extends Component {
     }
     componentDidMount(){
 
-        
+
         data = this.props.navigation.getParam('itemsend');
         alert('ahihi')
    } 
