@@ -195,7 +195,6 @@ class CapnhatThongtin extends Component {
               }}>
               <Text style={{color: 'white'}}>Cập nhập</Text>
             </TouchableHighlight>
-          </View>
         </ScrollView>
       </View>
     );
@@ -341,7 +340,7 @@ class BaoMat extends Component {
             keyboardType="numeric"
             onChangeText={(text) => {
               this.setState({newPassword: text});
-            }}
+            }} />
 
         </View>
 
@@ -363,7 +362,6 @@ class BaoMat extends Component {
 
 
       {this.state.isLoading ? <ActivityIndicator/> : (
-        ) : (
           <Text></Text> // item. ltinh tron
         )}
       </View>
@@ -426,8 +424,8 @@ class Top extends Component {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignSelf: 'flex-end',
-
-                  <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
+          }} >
+        <View style={{alignItems:'center',justifyContent:'center',flex:1}}>
             <Image
               style={{width: 70, height: 70, marginTop: 10, borderRadius: 35}}
               source={{

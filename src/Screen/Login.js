@@ -54,7 +54,7 @@ export default class Login extends Component {
       // Error saving data
     }
   }
-  /* 
+  /*
   async getluutoken(){
     try{
       var v= await AsyncStorage.getItem('ACCESS_TOKEN');
@@ -65,54 +65,54 @@ export default class Login extends Component {
   }
   */
   async login() {
-    //localStorage.setItem('token',JSON.stringify(verificationToken));
-    //console.log(this.state.sodt +" "+this.state.password);
-    if (this.state.sodt == '' || this.state.password == '')
-      alert('Vui lòng điền đẩy đủ thông tin');
-    if (this.state.sodt != '' && this.state.password != '') {
-      this.setState({
-        isloading: true,
-      });
-      try {
-        await fetch(login, {
-          method: 'POST',
-          body: JSON.stringify({
-            username: this.state.sodt,
-            password: this.state.password,
-          }),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-
-              },
-        })
-          .then((response) => response.json())
-          .then((responseData) => {
-            if (responseData.message == 'login success') {
-              console.log('aaaa', responseData);
-              this.ghifile();
-              this.luutoken(responseData.data.verificationToken);
-              this.props.navigation.navigate('home');
-            } else {
-              alert('Sai thông tin đăng nhập');
-            }
-
-            console.log(responseData);
-
-            if (responseData.message == 'login fail') {
-              alert('Đăng nhập không thành công');
-            }
-
-          .finally(() => {
-            this.setState({isloading: false});
+      //localStorage.setItem('token',JSON.stringify(verificationToken));
+      //console.log(this.state.sodt +" "+this.state.password);
+      if (this.state.sodt == '' || this.state.password == '')
+          alert('Vui lòng điền đẩy đủ thông tin');
+      if (this.state.sodt != '' && this.state.password != '') {
+          this.setState({
+              isloading: true,
           });
-      } catch (error) {
-        alert(error + 'đăng nhập không thành công');
+          try {
+              await fetch(login, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                      username: this.state.sodt,
+                      password: this.state.password,
+                  }),
+                  headers: {
+                      'Content-Type': 'application/json; charset=UTF-8',
+
+                  },
+              })
+                  .then((response) => response.json())
+                  .then((responseData) => {
+                      if (responseData.message == 'login success') {
+                          console.log('aaaa', responseData);
+                          this.ghifile();
+                          this.luutoken(responseData.data.verificationToken);
+                          this.props.navigation.navigate('home');
+                      } else {
+                          alert('Sai thông tin đăng nhập');
+                      }
+
+                      console.log(responseData);
+
+                      if (responseData.message == 'login fail') {
+                          alert('Đăng nhập không thành công');
+                      }
+                  }).finally(() => {
+                      this.setState({isloading: false});
+                  });
+          } catch (error) {
+              alert(error + 'đăng nhập không thành công');
+          }
+
       }
-    }
   }
   render() {
     return (
-
+        <View
         style={{
           flex: 1,
           flexDirection: 'column',
@@ -130,9 +130,7 @@ export default class Login extends Component {
             }}>
             <ActivityIndicator />
           </View>
-        ) : (
-          <View></View>
-        )}
+        ) : (<View></View>)}
         <ScrollView style={{flex: 1}}>
           <View
             style={{
@@ -155,8 +153,7 @@ export default class Login extends Component {
               marginTop: 40,
             }}>
             <View style={{alignItems: 'flex-start'}}>
-
-                style={{
+                <View style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
@@ -177,8 +174,7 @@ export default class Login extends Component {
                   }}
                 />
               </View>
-
-
+              <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',

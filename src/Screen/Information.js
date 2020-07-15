@@ -101,9 +101,7 @@ export default class Information extends Component {
         </View>
 
 
-      {this.state.isLoading ? <ActivityIndicator/> : (
-        ) : (
-          <Text></Text> // item. ltinh tron
+      {this.state.isLoading ? (<ActivityIndicator/>) :  (<Text></Text> // item. ltinh tron
         )}
       </View>
     );

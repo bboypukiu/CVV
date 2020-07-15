@@ -37,7 +37,7 @@ function Map({route, navigation}) {
         navigation={navigation}
         latitude1={latitude}
         longitude1={longitude}
-      />
+      />)
 
   } else {
     return <Map1 navigation={navigation} />;
@@ -120,7 +120,7 @@ function TabBottom() {
         }}
         name="canhan"
         component={Canhan}
-
+      />
     </Tab.Navigator>
 
     );

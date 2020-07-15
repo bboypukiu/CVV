@@ -20,7 +20,7 @@ export default class SMSCODE extends Component {
       x: null,
       loading: true,
       address: '',
-
+    }
   }
 
   getCoordinates(query) {
@@ -86,17 +86,17 @@ export default class SMSCODE extends Component {
             </Text>
 
 
-       <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:300,height:40,borderWidth:0.5,borderRadius:5,padding:10,marginTop:-10, color:'#FFFFFF'}}>
-              <Icon name="person-outline" size={20} />
-              <TextInput
-                style={{width: 250, height: 35, color: '#000000'}}
-                placeholder="Số điện thoại"
-                keyboardType="numeric"
-                onChangeText={(text) => {
-                  this.setState({sodt: text});
-                }}
-              />
-            </View>
+         <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:300,height:40,borderWidth:0.5,borderRadius:5,padding:10,marginTop:-10, color:'#FFFFFF'}}>
+                <Icon name="person-outline" size={20} />
+                <TextInput
+                  style={{width: 250, height: 35, color: '#000000'}}
+                  placeholder="Số điện thoại"
+                  keyboardType="numeric"
+                  onChangeText={(text) => {
+                    this.setState({sodt: text});
+                  }}
+                />
+         </View>
 
             <View
               style={{
@@ -119,7 +119,7 @@ export default class SMSCODE extends Component {
                 <Text style={{color: 'white'}}>Gửi Tin Nhắn</Text>
               </TouchableHighlight>
             </View>
-
+          </View>
         </KeyboardAvoidingView>
       </CardView>
     );

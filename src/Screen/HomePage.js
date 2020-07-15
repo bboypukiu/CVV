@@ -46,47 +46,41 @@ class Trangchu extends Component {
 
   render() {
     return (
-
-            <View style={{flex:1}}>
-
-
-            flex: 0.8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#669999',
-          }}>
+        <View style={{flex:1}}>
+         <View style={{
+                flex: 0.8,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#669999',
+                }}></View>
           <Text style={{color: 'white', fontSize: 20}}>Đơn hàng mới</Text>
-        </View>
-        <View
-          style={{
-            flex: 7,
+        <View style={{
+            flex:7,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#eaeae1',
-          }}>
+            backgroundColor: '#eaeae1'
+                 }} >
           <HomePageAPI navigation={this.props.navigation}></HomePageAPI>
 
-     </View>
+        </View>
 
         <View style={{position: 'absolute', bottom: 50, right: 50}}>
-
-                      {this.state.scrolltotop == true ? <TouchableHighlight
+            {this.state.scrolltotop == true ?
+                (<TouchableHighlight
               underlayColor=""
               style={{
                 alignItems: 'center',
                 width: 50,
                 height: 50,
                 justifyContent: 'center',
-                alignItems: 'center',
               }}
               onPress={() => {
                 this.toTop();
               }}>
               <Icon name="arrow-up-circle-outline" size={40} color="green" />
-            </TouchableHighlight>
-          ) : (
-            <View></View>
-          )}
+            </TouchableHighlight>)
+          : (<View></View>)
+          }
         </View>
       </View>
     );

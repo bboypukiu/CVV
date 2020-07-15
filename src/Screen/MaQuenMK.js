@@ -15,7 +15,7 @@ import {
 import Icon from 'react-native-ionicons';
 import CardView from 'react-native-cardview';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-let x1 = Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+let x1 = Dimensions.get('window').width; // lay ra chiue rong cua man hinh
 
 export default class MaQuenMK extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class MaQuenMK extends Component {
       username: '',
       newPassword: '',
       macode: '',
-    };   
+    };
   }
   async macode() {
     // console.log('aa')
@@ -44,14 +44,13 @@ export default class MaQuenMK extends Component {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-
-  });
+        });
         // this.props.natigation.navigate('register');
       } else {
         alert('Mã code sai vui lòng nhập lại ');
-
-}
-      } else {alert('Vui lòng nhập đúng mã code');};
+      }
+    } else {
+      alert('Vui lòng nhập đúng mã code');
     }
   }
 

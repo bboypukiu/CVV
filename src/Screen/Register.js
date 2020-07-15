@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import RegisterAPI from '../../API/RegisterApi.js';
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,7 @@ export default class Register extends Component {
   }
 
   register() {}
+
   render() {
     return (
       <View

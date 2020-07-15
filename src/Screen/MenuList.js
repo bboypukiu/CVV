@@ -66,10 +66,9 @@ class ItemDonhang extends Component {
                 />
                 <Text
                   style={{color: '#669999', fontSize: 15, fontWeight: 'bold'}}>
-                  {this.props.item.ten}
-
-                      </View>
-                style={{
+                  {this.props.item.ten}</Text>
+                </View>
+               <View style={{
                   justifyContent: 'center',
                   flex: 2,
                   alignItems: 'flex-end',
@@ -92,9 +91,7 @@ class ItemDonhang extends Component {
                     <Picker.Item label="Hủy đơn" value="huydon" />
                     <Picker.Item label="Trả đơn" value="tradon" />
                   </Picker>
-                ) : (
-                  <View></View>
-                )}
+                ) : (<View />)}
               </View>
             </View>
           </View>
@@ -112,8 +109,8 @@ class ItemDonhang extends Component {
 
         <View style={{flex: 3}}></View>
       </View>
-
-    );}
+    );
+  }
 }
 
 class DanhSachDonNhan extends Component {
@@ -137,10 +134,9 @@ class DanhSachDonNhan extends Component {
           flex: 7,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#eaeae1',
+          backgroundColor: '#eaeae1',}}>
 
-        {this.state.scrolltotop == true ? (
-          <TouchableHighlight
+        {this.state.scrolltotop == true ? (<TouchableHighlight
             underlayColor="white"
             style={{
               alignItems: 'center',
@@ -151,19 +147,14 @@ class DanhSachDonNhan extends Component {
             onPress={() => {
               this.toTop();
             }}>
-            <Icon name="arrow-up-outline" size={40} color="green" />
-          </TouchableHighlight>
-        ) : (
-          <View></View>
-        )}
+          <Icon name="arrow-up-outline" size={40} color="green"/>
+        </TouchableHighlight>) : (<View/>)}
         <FlatList
           style={{flex: 10 / 10}}
           data={this.state.dsdonhangnhan}
           ref="flatlis"
-
-                     onTouchMove={() => {
-
-                        this.setState({
+          onTouchMove={() => {
+              this.setState({
               loaddata: true,
             });
           }}
@@ -184,16 +175,13 @@ class DanhSachDonNhan extends Component {
                 scrolltotop: false,
               });
             }
-
-                    }}
+          }}
           renderItem={({item, index}) => {
             return (
               <ItemDonhang item={item} parent={this.props.parent.state.a1} />
-            );
-
+            ); }}
         />
-
-           </View>
+      </View>
     );
   }
 }
@@ -392,33 +380,25 @@ export default class Danhsachdonnhan extends Component {
   };
 
   render() {
-
         return (
+            <View style={{flex: 1, backgroundColor: '#669999'}}>
+              <View
+                  style={{
+                    flex: 2 / 10,
+                    width: '100%',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    backgroundColor: '#669999',
+                  }}>
+                <Top ref="top" parent={this}/>
+              </View>
 
-            <View style={{flex:1, backgroundColor:'#669999'}}>
-        <View
-          style={{
-            flex: 2 / 10,
-            width: '100%',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            backgroundColor: '#669999',
-          }}>
-          <Top ref="top" parent={this} />
-
-                </View>
-
-        <View style={{flex: 7.9 / 10, width: '100%', backgroundColor: 'white'}}>
-          <MenuListApi onNavi={this.naviScreen} />
-          {this.state.a1 == 0 ? (
-            <DanhSachDonNhan parent={this} navigation={this.props.navigation} />
-          ) : (
-            <View style={{flex: 1}}>
-              {this.state.a1 == 1 ? <ThongTinLichsu /> : <BaoMat />}
-
-                </View>
-
-            </View>
-    );
+              <View style={{flex: 7.9 / 10, width: '100%', backgroundColor: 'white'}}>
+                <MenuListApi onNavi={this.naviScreen}/>
+                {this.state.a1 == 0 ?
+                    (<DanhSachDonNhan parent={this} navigation={this.props.navigation}/>) :
+                    (<View style={{flex: 1}}>{this.state.a1 == 1 ? <ThongTinLichsu/> : <BaoMat/>}</View>)}
+              </View>
+            </View>    );
   }
 }

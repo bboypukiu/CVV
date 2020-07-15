@@ -16,7 +16,7 @@ import Icon from 'react-native-ionicons';
 import CardView from 'react-native-cardview';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {macodedki} from '../../API/API.js';
-let x1 = Dimensions.get('window').width;// lay ra chiue rong cua man hinh
+let x1 = Dimensions.get('window').width; // lay ra chiue rong cua man hinh
 
 export default class MacodeDki extends Component {
   constructor(props) {
@@ -25,30 +25,36 @@ export default class MacodeDki extends Component {
       sodt: '',
       matkhau: '',
       smscode: '',
-    };   
+    };
   }
+
   async macode() {
     // console.log('aa')
-    const xacthuc = 'http://222.252.26.108:8889/user-m-service/shipper/verification-user?phoneNumber=' + this.props.phoneNumbe + '&code=' + this.props.code + '&password=' + this.props.password;
+    const xacthuc =
+      'http://222.252.26.108:8889/user-m-service/shipper/verification-user?phoneNumber=' +
+      this.props.phoneNumbe +
+      '&code=' +
+      this.props.code +
+      '&password=' +
+      this.props.password;
     console.log(xacthuc);
     const {sodt, matkhau, smscode} = this.state;
     //console.log(this.state.sodt +" "+ this.state.matkhau +" "+this.state.smscode);
 
-    if (sodt != '' && matkhau != '' && smscode != '') {
-      if (smscode == smscode) {
+    if (sodt !== '' && matkhau !== '' && smscode !== '') {
+      if (smscode === smscode) {
         fetch(xacthuc, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           },
-
-  });
+        });
         // this.props.natigation.navigate('register');
       } else {
         alert('Mã code sai vui lòng nhập lại ');
-
-}
-      } else {alert('Vui lòng nhập đúng mã code');};
+      }
+    } else {
+      alert('Vui lòng nhập đúng mã code');
     }
   }
 

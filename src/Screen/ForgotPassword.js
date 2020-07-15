@@ -23,8 +23,7 @@ export default class ForgotPassword extends Component {
       isloading: false,
       sodt: '',
     };
-
-
+  }
   guitinnhan() {
     console.log('aa');
 
@@ -52,11 +51,7 @@ export default class ForgotPassword extends Component {
       alert('Vui lòng nhap dung so dien thoai');
     }
   }
-
-
-
-render(){
-    return (
-<ForgotPasswordAPI navigation={this.props.navigation} />
+  render() {
+    return <ForgotPasswordAPI navigation={this.props.navigation} />;
   }
 }

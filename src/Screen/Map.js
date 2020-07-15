@@ -36,7 +36,7 @@ class TimkiemBando extends Component {
   render() {
     return (
 
-
+        <View
         style={{
           margin: 20,
           width: x1 * 0.9,
@@ -45,8 +45,8 @@ class TimkiemBando extends Component {
           position: 'absolute',
           justifyContent: 'center',
           backgroundColor: 'white',
-          alignItems: 'center',
-
+          alignItems: 'center',}}
+            >
 
       <View   style={{backgroundColor:'white',justifyContent:'flex-start',
             flexDirection: 'row',
@@ -68,9 +68,9 @@ class TimkiemBando extends Component {
                 this.setState({
                   isShow: false,
                 });
-
-       }
-
+             }
+            }
+            }
             placeholder="Nhập địa điểm tìm kiếm"
             style={{fontSize: 13, width: x1 - 150, height: 35}}
           />
@@ -100,13 +100,10 @@ class TimkiemBando extends Component {
                   this.setState({search: '', isShow: false});
                 }}
                 style={{width: 20, height: 20}}>
-
           <Icon name="close-sharp" size={20} color="black"  />
               </TouchableHighlight>
             </View>
-          ) : (
-            <View></View>
-
+          ) : (<View></View>)}
         </View>
 
         {this.state.isShow == true ? (
@@ -204,13 +201,11 @@ class Chitietcitri extends Component {
             backgroundColor: 'white',
             paddingBottom: 10,
             flexDirection: 'column',
-            alignItems: 'flex-end',
+            alignItems: 'flex-end',}}>
 
           <ChitietDon nhan="ok" />
 
-          <View style={{position: 'absolute'}}></View>
-
-
+          <View style={{position: 'absolute',
               width: x1 - 30,
               flexDirection: 'row',
               justifyContent: 'center',
@@ -222,7 +217,7 @@ class Chitietcitri extends Component {
                   this.props.parent.state.indexxemchitiets + 'phan tu da chon',
                 );
                 let abc = this.props.parent.state.cuahang[
-                  this.props.parent.state.indexxemchitiets
+                  this.props.parent.state.indexxemchitiets]
 
                 //  let gh=[{abc}];
                 this.props.parent.setState({
@@ -368,7 +363,6 @@ export default class Map extends Component {
     };
   }
 
-
   location() {
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
@@ -388,15 +382,14 @@ export default class Map extends Component {
       });
   }
 
-  Wll;
   componentWillReceiveProps(next) {
 
           console.log('co vi tri' + next.latitude1);
-    this.getDirections(
+      this.getDirections(
       this.state.latitudeme,
       this.state.longitudeme,
       next.latitude1,
-      next.longitude1,
+      next.longitude1)
 
   }
 
@@ -404,12 +397,7 @@ export default class Map extends Component {
     //   setInterval(() => {
     //    this.location();
     //   }, 5000);
-
-
         this.location();
-
-
-
        }
 
   async getDirections(st1, st2, st3, st4) {
@@ -502,20 +490,18 @@ export default class Map extends Component {
   }
 
 
-      render() {
-
+  render() {
         return (
       <View style={{flex: 1}}>
-
-          style={{flex: 1}}
+        <MapView  style={{flex: 1}}
           region={{
             latitude: this.state.latitude,
             longitude: this.state.longitude,
             latitudeDelta: 0.09, //this.state.latitudeDelta,
             longitudeDelta: 0.09, //this.state.longitudeDelta,
-          }}
-          //   onRegionChange={this.onRegionChange}
-        >
+          }}>
+           {/*onRegionChange={this.onRegionChange}*/}
+
           {/* chiduong */}
           <MapView.Polyline
             coordinates={this.state.coords}
@@ -537,11 +523,9 @@ export default class Map extends Component {
 
           {this.state.cuahang.length != 0 &&
             this.state.cuahang.map((marker, index) => (
-              // ch
               <MapView.Marker
                 ref="cuahang"
                 onPress={() => {
-
               this.setState({xemchitietcitri:true,bottomchiduong:false,isShowLocationhientai:false,indexxemchitiets:index,
                     latitudeend: marker.latitude,
                     longitudeend: marker.longitude,
@@ -553,7 +537,8 @@ export default class Map extends Component {
                   longitude: marker.longitude,
                 }}
                 title={'Vị trí cửa hàng cần giao hàng '}
-                draggable>
+                draggable
+              >
                 <Image
                   style={{width: 50, height: 50}}
                   source={require('../Image/cuahang.png')}
@@ -561,17 +546,12 @@ export default class Map extends Component {
               </MapView.Marker>
             ))}
 
-
-
-      <MapView.Marker
-
-      coordinate={{ 'latitude': this.state.latitudeend,
-      'longitude': this.state.longitudeend }}
+          <MapView.Marker
+            coordinate={{ 'latitude': this.state.latitudeend,  'longitude': this.state.longitudeend }}
             title={'Vị trí tìm kiếm '}
             draggable>
             <Icon name="pin-outline" size={40} color="green" />
           </MapView.Marker>
-
           {parseFloat(this.props.latitude1) ? ( // vi tri cua hang hoac nguoi nhan chon chi duong
             <MapView.Marker
               coordinate={{
@@ -579,15 +559,11 @@ export default class Map extends Component {
                 longitude: parseFloat(this.props.longitude1),
               }}
               title={'Vị trí cần đến '}
-              draggable></MapView.Marker>
-
-            <View></View>
-          )}
+              draggable>
+            </MapView.Marker>):(<View/>)}
         </MapView>
         {this.state.xemchitietcitri == true ? (
-          <Chitietcitri parent={this} navigation={this.props.navigation} />
-
-            : <View />}
+          <Chitietcitri parent={this} navigation={this.props.navigation} />): <View/>}
         {/* <Chitietcitri parent={this} navigation={this.props.navigation}/> */}
         <TimkiemBando parent={this} />
 
@@ -612,9 +588,7 @@ export default class Map extends Component {
             }}>
             <Icon name="body-outline" color="#009999" size={23} />
           </TouchableHighlight>
-        ) : (
-          <View></View>
-        )}
+        ) : (<View />)}
 
         {this.state.isloadingDirection == true ? (
           <View
@@ -626,9 +600,8 @@ export default class Map extends Component {
               alignItems: 'center',
             }}>
             <ActivityIndicator />
-          </View>
-    : <View />}
-        )}
+          </View>): (<View />)}
+
         {this.state.bottomchiduong == true ? (
           <View
             style={{
@@ -659,8 +632,8 @@ export default class Map extends Component {
                 <TouchableHighlight
                   underlayColor="#ebebe0"
                   onPress={() => {
-                    this.setState({bottomchiduong: false, coords: []});
-
+                      this.setState({bottomchiduong: false, coords: []});
+                  }}>
                   <Icon name="cut-outline" size={20} color="green" />
                 </TouchableHighlight>
               </View>
@@ -673,13 +646,8 @@ export default class Map extends Component {
               <Text style={{marginLeft: 10, color: '#ff00ff'}}>
                 {thoigiandichuyengiua2diem}
               </Text>
-            </View>
-       : <View />}
-
-        ) : (
-
-
-      </View>
-    );
-  }
+            </View></View>):(<View />)}
+      </View>)
 }
+
+

@@ -48,11 +48,9 @@ export default class App extends Component {
           <Image
             style={{width: 150, height: 150}}
             source={require('../Image/logologin.png')}
-
+          />
         </Animated.View>
-
-
-        </View>
+      </View>
     );
   }
 }
